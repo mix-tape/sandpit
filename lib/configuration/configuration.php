@@ -11,62 +11,11 @@
 add_theme_support('root-relative-urls');    // Enable relative URLs
 add_theme_support('rewrite-urls');          // Enable URL rewrites
 add_theme_support('h5bp-htaccess');         // Enable HTML5 Boilerplate's .htaccess
-add_theme_support('bootstrap-top-navbar');  // Enable Bootstrap's fixed navbar
 
 // Remove Emoji Support
 remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
 remove_action( 'wp_print_styles', 'print_emoji_styles' );
 
-
-
-/**
- * Define which pages shouldn't have the sidebar
- *
- * See lib/sidebar.php for more details
- */
-function roots_display_sidebar() {
-  $sidebar_config = new Roots_Sidebar(
-    /**
-     * Conditional tag checks (http://codex.wordpress.org/Conditional_Tags)
-     * Any of these conditional tags that return true won't show the sidebar
-     *
-     * To use a function that accepts arguments, use the following format:
-     *
-     * array('function_name', array('arg1', 'arg2'))
-     *
-     * The second element must be an array even if there's only 1 argument.
-     */
-    array(
-      'is_404',
-      'is_front_page'
-    ),
-    /**
-     * Page template checks (via is_page_template())
-     * Any of these page templates that return true won't show the sidebar
-     */
-    array(
-      'page-custom.php'
-    )
-  );
-
-  return $sidebar_config->display;
-}
-
-// #main CSS classes
-function roots_main_class() {
-  if (roots_display_sidebar()) {
-    $class = 'span8';
-  } else {
-    $class = 'span12';
-  }
-
-  return $class;
-}
-
-// #sidebar CSS classes
-function roots_sidebar_class() {
-  return 'span4';
-}
 
 /**
  * Clean up wp_head()
@@ -164,33 +113,6 @@ function roots_clean_style_tag($input) {
 
 add_filter('style_loader_tag', 'roots_clean_style_tag');
 
-/**
- * Add and remove body_class() classes
- */
-function roots_body_class($classes) {
-  // Add 'top-navbar' class if using Bootstrap's Navbar
-  // Used to add styling to account for the WordPress admin bar
-  if (current_theme_supports('bootstrap-top-navbar')) {
-    $classes[] = 'top-navbar';
-  }
-
-  // Add post/page slug
-  if (is_single() || is_page() && !is_front_page()) {
-    $classes[] = basename(get_permalink());
-  }
-
-  // Remove unnecessary classes
-  $home_id_class = 'page-id-' . get_option('page_on_front');
-  $remove_classes = array(
-    'page-template-default',
-    $home_id_class
-  );
-  $classes = array_diff($classes, $remove_classes);
-
-  return $classes;
-}
-
-add_filter('body_class', 'roots_body_class');
 
 /**
  * Root relative URLs
@@ -203,6 +125,7 @@ add_filter('body_class', 'roots_body_class');
  *
  * @author Scott Walkinshaw <scott.walkinshaw@gmail.com>
  */
+
 function roots_root_relative_url($input) {
   $output = preg_replace_callback(
     '!(https?://[^/|"]+)([^"]+)?!',
@@ -221,10 +144,12 @@ function roots_root_relative_url($input) {
   return $output;
 }
 
+
 /**
  * Terrible workaround to remove the duplicate subfolder in the src of <script> and <link> tags
  * Example: /subfolder/subfolder/css/style.css
  */
+
 function roots_fix_duplicate_subfolder_urls($input) {
   $output = roots_root_relative_url($input);
   preg_match_all('!([^/]+)/([^/]+)!', $output, $matches);
@@ -294,143 +219,6 @@ function roots_attachment_link_class($html) {
 
 add_filter('wp_get_attachment_link', 'roots_attachment_link_class', 10, 1);
 
-/**
- * Add Bootstrap thumbnail styling to images with captions
- * Use <figure> and <figcaption>
- *
- * @link http://justintadlock.com/archives/2011/07/01/captions-in-wordpress
- */
-function roots_caption($output, $attr, $content) {
-  if (is_feed()) {
-    return $output;
-  }
-
-  $defaults = array(
-    'id'      => '',
-    'align'   => 'alignnone',
-    'width'   => '',
-    'caption' => ''
-  );
-
-  $attr = shortcode_atts($defaults, $attr);
-
-  // If the width is less than 1 or there is no caption, return the content wrapped between the [caption] tags
-  if ($attr['width'] < 1 || empty($attr['caption'])) {
-    return $content;
-  }
-
-  // Set up the attributes for the caption <figure>
-  $attributes  = (!empty($attr['id']) ? ' id="' . esc_attr($attr['id']) . '"' : '' );
-  $attributes .= ' class="thumbnail wp-caption ' . esc_attr($attr['align']) . '"';
-  $attributes .= ' style="width: ' . esc_attr($attr['width']) . 'px"';
-
-  $output  = '<figure' . $attributes .'>';
-  $output .= do_shortcode($content);
-  $output .= '<figcaption class="caption wp-caption-text">' . $attr['caption'] . '</figcaption>';
-  $output .= '</figure>';
-
-  return $output;
-}
-
-add_filter('img_caption_shortcode', 'roots_caption', 10, 3);
-
-/**
- * Clean up gallery_shortcode()
- *
- * Re-create the [gallery] shortcode and use thumbnails styling from Bootstrap
- *
- * @link http://twitter.github.com/bootstrap/components.html#thumbnails
- */
-function roots_gallery($attr) {
-  $post = get_post();
-
-  static $instance = 0;
-  $instance++;
-
-  if (!empty($attr['ids'])) {
-    if (empty($attr['orderby'])) {
-      $attr['orderby'] = 'post__in';
-    }
-    $attr['include'] = $attr['ids'];
-  }
-
-  $output = apply_filters('post_gallery', '', $attr);
-
-  if ($output != '') {
-    return $output;
-  }
-
-  if (isset($attr['orderby'])) {
-    $attr['orderby'] = sanitize_sql_orderby($attr['orderby']);
-    if (!$attr['orderby']) {
-      unset($attr['orderby']);
-    }
-  }
-
-  extract(shortcode_atts(array(
-    'order'      => 'ASC',
-    'orderby'    => 'menu_order ID',
-    'id'         => $post->ID,
-    'itemtag'    => '',
-    'icontag'    => '',
-    'captiontag' => '',
-    'columns'    => 3,
-    'size'       => 'thumbnail',
-    'include'    => '',
-    'exclude'    => ''
-  ), $attr));
-
-  $id = intval($id);
-
-  if ($order === 'RAND') {
-    $orderby = 'none';
-  }
-
-  if (!empty($include)) {
-    $_attachments = get_posts(array('include' => $include, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $order, 'orderby' => $orderby));
-
-    $attachments = array();
-    foreach ($_attachments as $key => $val) {
-      $attachments[$val->ID] = $_attachments[$key];
-    }
-  } elseif (!empty($exclude)) {
-    $attachments = get_children(array('post_parent' => $id, 'exclude' => $exclude, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $order, 'orderby' => $orderby));
-  } else {
-    $attachments = get_children(array('post_parent' => $id, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $order, 'orderby' => $orderby));
-  }
-
-  if (empty($attachments)) {
-    return '';
-  }
-
-  if (is_feed()) {
-    $output = "\n";
-    foreach ($attachments as $att_id => $attachment) {
-      $output .= wp_get_attachment_link($att_id, $size, true) . "\n";
-    }
-    return $output;
-  }
-
-  $output = '<ul class="thumbnails gallery">';
-
-  $i = 0;
-  foreach ($attachments as $id => $attachment) {
-    $link = isset($attr['link']) && 'file' == $attr['link'] ? wp_get_attachment_link($id, $size, false, false) : wp_get_attachment_link($id, $size, true, false);
-
-    $output .= '<li>' . $link;
-    if (trim($attachment->post_excerpt)) {
-      $output .= '<div class="caption hidden">' . wptexturize($attachment->post_excerpt) . '</div>';
-    }
-    $output .= '</li>';
-  }
-
-  $output .= '</ul>';
-
-  return $output;
-}
-
-remove_shortcode('gallery');
-add_shortcode('gallery', 'roots_gallery');
 
 /**
  * Remove unnecessary dashboard widgets
