@@ -1,12 +1,37 @@
 <?php
-/**
- * Required by WordPress.
- *
- * Keep this file clean and only use it for requires.
- */
 
-require_once locate_template('/lib/utils.php');           // Utility functions
-require_once locate_template('/lib/init.php');            // Initial theme setup and constants
+// ==========================================================================
+//
+//  Functions.php
+//    Required by Wordpress, keep clean and use only for requires
+//
+// ==========================================================================
+
+include_once('lib/configuration/initialize.php');           // Utility functions
+include_once('lib/configuration/activation.php');
+include_once('lib/configuration/assets-enqueue.php');
+
+
+// --------------------------------------------------------------------------
+//   Include Utilities
+// --------------------------------------------------------------------------
+
+foreach (glob(dirname(__FILE__) . "/lib/utilities/*.php") as $filename)
+{
+	include $filename;
+}
+
+
+// --------------------------------------------------------------------------
+//   Include Models
+// --------------------------------------------------------------------------
+
+foreach (glob(dirname(__FILE__) . "/lib/models/*.php") as $filename)
+{
+	include $filename;
+}
+
+
 require_once locate_template('/lib/config.php');          // Configuration
 require_once locate_template('/lib/activation.php');      // Theme activation
 require_once locate_template('/lib/cleanup.php');         // Cleanup
