@@ -13,6 +13,11 @@ add_theme_support('rewrite-urls');          // Enable URL rewrites
 add_theme_support('h5bp-htaccess');         // Enable HTML5 Boilerplate's .htaccess
 add_theme_support('bootstrap-top-navbar');  // Enable Bootstrap's fixed navbar
 
+// Remove Emoji Support
+remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+remove_action( 'wp_print_styles', 'print_emoji_styles' );
+
+
 
 /**
  * Define which pages shouldn't have the sidebar
