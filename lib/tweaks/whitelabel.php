@@ -17,7 +17,7 @@ if ( function_exists('acf_add_options_page') )
 		'page_title' 	=> 'Birdbrain Settings',
 		'menu_title'	=> 'Birdbrain',
 		'menu_slug' 	=> 'birdbrain',
-		'icon_url'    =>  get_template_directory_uri() . '/lib/img/bb.png',
+		'icon_url'    =>  get_template_directory_uri() . '/lib/images/bb.png',
 		'capability'	=> 'edit_posts',
 		'redirect'		=> true
 	));
@@ -45,7 +45,7 @@ function hibiki_login_head()
 	echo "
 	<style>
 	body.login #login h1 a {
-		background: url('".get_bloginfo('template_url')."/assets/img/birdbrain.svg') no-repeat scroll center top transparent;
+		background: url('".get_bloginfo('template_url')."/assets/images/birdbrain.svg') no-repeat scroll center top transparent;
 		background-size: contain;
 		height: 90px;
 		width: 100%;
