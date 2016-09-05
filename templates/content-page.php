@@ -8,9 +8,6 @@
           <?php wp_link_pages(array('before' => '<nav class="pagination">', 'after' => '</nav>')); ?>
         </div>
       </article>
-      <aside class="<?php echo roots_sidebar_class(); ?>">
-        <?php get_template_part('templates/sidebar'); ?>
-      </aside>
     <?php endwhile; ?>
   </div>
 </section>
