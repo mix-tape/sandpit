@@ -8,6 +8,7 @@ function body_classes($classes) {
   return $classes;
 
 }
+
 add_filter('body_class', 'body_classes', 10, 1);
 
 // Allow SVG files to be uploaded via Media Library
@@ -21,64 +22,6 @@ add_filter('upload_mimes', 'cc_mime_types');
 remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
 remove_action( 'wp_print_styles', 'print_emoji_styles' );
 
-// Tweet
-function get_tweet() {
-require dirname( __FILE__ ) . '/twitter/tmhOAuth.php';
-require dirname( __FILE__ ) . '/twitter/tmhUtilities.php';
-$tmhOAuth = new tmhOAuth(array(
-  'consumer_key'        => 'jJEOMbyUQq3PGL6dVYjcyWQqv',
-  'consumer_secret'     => 'z6sMzBKE6yIoHjY8wUlYxr30ctzpN8OsRJdpXW986zVL2vJpiL',
-  'user_token'          => '338781770-LimiozRWBNR5sljOM3oMpunIdkM5OOlnR9Imwprp',
-  'user_secret'         => 'sRs92EI3bVQSnsWFW0F5tME5MEAh8Uj6dO76R1epz1HpP',
-  'curl_ssl_verifypeer' => false
-));
-$code = $tmhOAuth->request('GET', $tmhOAuth->url('1.1/statuses/user_timeline'), array(
-  'screen_name' => 'username',
-  'count' => '1'
-));
-$response = $tmhOAuth->response['response'];
-$tweets = json_decode($response, true);
-foreach($tweets as $tweet):
-  ?>
-  <!-- Begin tweet -->
-  <p class="tweet">
-    <?php
-    // Access as an object
-    $tweetText = $tweet['text'];
-    $tweetDate = strtotime($tweet['created_at']);
-    //Convert urls to <a> links
-    $tweetText = preg_replace('/https?:\/\/([a-z0-9_\.\-\+\&\!\#\~\/\,]+)/i', '<a href="http://$1" target="_blank" rel="nofollow">http://$1</a>', $tweetText);
-    //Convert attags to twitter profiles in &lt;a&gt; links
-    $tweetText = preg_replace('/@([a-z0-9_]+)/i', '<a href="http://twitter.com/$1" target="_blank" rel="nofollow">@$1</a>', $tweetText);
-    //Convert hashtags to twitter searches in <a> links
-    $tweetText = preg_replace('/#([A-Za-z0-9\/\.]*)/', '<a href="http://twitter.com/search?q=$1" target="_blank" rel="nofollow">#$1</a>', $tweetText);
-    // Output
-    echo $tweetText;
-    ?>
-  </p>
-  <!-- End tweet -->
-<?php
-endforeach;
-}
- 
-/* ------------------------------------------------------------------------
-  Google Tag Manager - admin field
------------------------------------------------------------------------- */
-/*$googletagmanager = new googletagmanager();
-
-class googletagmanager {
-    function googletagmanager( ) {
-        add_filter( 'admin_init' , array( &$this , 'register_fields' ) );
-    }
-    function register_fields() {
-        register_setting( 'general', 'googletagmanager', 'esc_attr' );
-        add_settings_field('googletagmanager', '<label for="googletagmanager">'.__('Google Tag Manager ID' , 'googletagmanager' ).'</label>' , array(&$this, 'fields_html') , 'general' );
-    }
-    function fields_html() {
-        $value = get_option( 'googletagmanager', '' );
-        echo '<input type="text" id="googletagmanager" name="googletagmanager" value="' . $value . '" />';
-    }
-}*/
 
 /* ------------------------------------------------------------------------
   Birdbrain settings - Admin options page
@@ -133,4 +76,13 @@ function remove_footer_admin ()
     echo '<span id="footer-thankyou">Developed by <a href="https://www.birdbrain.com.au" target="_blank">Birdbrain</a></span>';
 }
 add_filter('admin_footer_text', 'remove_footer_admin');
-?>
+
+/* ------------------------------------------------------------------------
+  Gravity form - enable hide label
+------------------------------------------------------------------------ */
+add_filter("gform_enable_field_label_visibility_settings", "__return_true");
+
+/* ------------------------------------------------------------------------
+  Gravity form - go to anchor after form submit
+------------------------------------------------------------------------ */
+add_filter("gform_confirmation_anchor", create_function("","return true;"));
