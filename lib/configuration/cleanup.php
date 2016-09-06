@@ -270,21 +270,6 @@ function hibiki_nice_search_redirect() {
 
 add_action('template_redirect', 'hibiki_nice_search_redirect');
 
-/**
- * Fix for empty search queries redirecting to home page
- *
- * @link http://wordpress.org/support/topic/blank-search-sends-you-to-the-homepage#post-1772565
- * @link http://core.trac.wordpress.org/ticket/11330
- */
-function hibiki_request_filter($query_vars) {
-  if (isset($_GET['s']) && empty($_GET['s'])) {
-    $query_vars['s'] = ' ';
-  }
-
-  return $query_vars;
-}
-
-add_filter('request', 'hibiki_request_filter');
 
 /**
  * Tell WordPress to use searchform.php from the templates/ directory
