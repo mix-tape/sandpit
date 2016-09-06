@@ -20,7 +20,8 @@ foreach (glob(dirname(__FILE__) . "/lib/utilities/*.php") as $filename)
 //   Include Configuration
 // --------------------------------------------------------------------------
 
-include_once('lib/configuration/initialize.php');           // Utility functions
+include_once('lib/configuration/cleanup.php');              // Cleanup the markup
+include_once('lib/configuration/configuration.php');        // Base configuration and constants
 include_once('lib/configuration/activation.php');           // Theme setup
 include_once('lib/configuration/assets-enqueue.php');       // Dependency management
 
