@@ -45,7 +45,7 @@ function hibiki_login_head()
 	echo "
 	<style>
 	body.login #login h1 a {
-		background: url('".get_bloginfo('template_url')."/assets/images/birdbrain.svg') no-repeat scroll center top transparent;
+		background: url('".get_bloginfo('template_url')."/lib/images/birdbrain.svg') no-repeat scroll center top transparent;
 		background-size: contain;
 		height: 90px;
 		width: 100%;
