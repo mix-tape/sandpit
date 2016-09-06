@@ -12,7 +12,7 @@
 
 foreach (glob(dirname(__FILE__) . "/lib/utilities/*.php") as $filename)
 {
-	include $filename;
+  include $filename;
 }
 
 
@@ -32,7 +32,7 @@ include_once('lib/configuration/assets-enqueue.php');       // Dependency manage
 
 foreach (glob(dirname(__FILE__) . "/lib/models/*.php") as $filename)
 {
-	include $filename;
+  include $filename;
 }
 
 
@@ -42,5 +42,5 @@ foreach (glob(dirname(__FILE__) . "/lib/models/*.php") as $filename)
 
 foreach (glob(dirname(__FILE__) . "/lib/tweaks/*.php") as $filename)
 {
-	include $filename;
+  include $filename;
 }
