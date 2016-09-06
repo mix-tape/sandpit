@@ -31,6 +31,13 @@ function hibiki_head_cleanup() {
   remove_action('wp_head', 'wp_oembed_add_discovery_links');
 
 
+  if (wp_count_posts()->publish > 0){
+    add_action('wp_head', 'hibiki_add_back_rss_feed');
+    function hibiki_add_back_rss_feed() {
+      echo '<link rel="alternate" type="application/rss+xml" title="'.get_bloginfo('name').' Feed" href="'.get_bloginfo('rss2_url').'" />';
+    }
+  }
+
   // Remove Emoji Support
   remove_action('wp_head', 'wp_resource_hints', 2);
   remove_action('wp_head', 'print_emoji_detection_script', 7);
