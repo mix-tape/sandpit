@@ -7,7 +7,7 @@
 
         <h1 class="entry-title"><?php the_title(); ?></h1>
 
-        <?php get_template_part('templates/entry-meta'); ?>
+        <?php get_template_part('templates/modules/entry-meta'); ?>
 
       </header>
 
@@ -25,7 +25,7 @@
 
       </footer>
 
-      <?php comments_template('/templates/comments.php'); ?>
+      <?php comments_template('/templates/modules/comments.php'); ?>
 
     </article>
 

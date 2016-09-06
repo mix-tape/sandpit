@@ -271,11 +271,12 @@ function hibiki_nice_search_redirect() {
 add_action('template_redirect', 'hibiki_nice_search_redirect');
 
 
-/**
- * Tell WordPress to use searchform.php from the templates/ directory
- */
+// --------------------------------------------------------------------------
+//   Tell WordPress to use searchform.php from the templates/ directory
+// --------------------------------------------------------------------------
+
 function hibiki_get_search_form() {
-  locate_template('/templates/searchform.php', true, true);
+  locate_template('/templates/modules/searchform.php', true, true);
 }
 
 add_filter('get_search_form', 'hibiki_get_search_form');

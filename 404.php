@@ -1,2 +1,2 @@
-<?php get_template_part('templates/page', 'header'); ?>
-<?php get_template_part('templates/content', '404') ?>
+<?php get_template_part('templates/layout/page-header'); ?>
+<?php get_template_part('templates/content/404') ?>

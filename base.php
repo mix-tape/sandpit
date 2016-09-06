@@ -5,15 +5,15 @@
 //
 // ==========================================================================
 
-get_template_part('templates/head'); ?>
+get_template_part('templates/layout/head'); ?>
 
 <body <?php body_class(); ?>>
 
-<?php get_template_part('templates/header');?>
+<?php get_template_part('templates/layout/header');?>
 
 <?php include roots_template_path(); ?>
 
-<?php get_template_part('templates/footer'); ?>
+<?php get_template_part('templates/layout/footer'); ?>
 
 <?php wp_footer(); ?>
 
