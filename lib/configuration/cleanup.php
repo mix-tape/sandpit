@@ -34,7 +34,7 @@ function hibiki_head_cleanup() {
   if (wp_count_posts()->publish > 0){
     add_action('wp_head', 'hibiki_add_back_rss_feed');
     function hibiki_add_back_rss_feed() {
-      echo '<link rel="alternate" type="application/rss+xml" title="'.get_bloginfo('name').' Feed" href="'.get_bloginfo('rss2_url').'" />';
+      echo '<link rel="alternate" type="application/rss+xml" title="'.get_bloginfo('name').' Feed" href="'.get_bloginfo('rss2_url').'" />' . "\n";
     }
   }
 

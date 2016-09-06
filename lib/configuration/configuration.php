@@ -47,7 +47,7 @@ update_option('image_default_link_type', 'none' );
 update_option('image_default_size', 'large' );
 
 
-function sandpit_add_custom_image_sizes( $imageSizes ) {
+function hibiki_add_custom_image_sizes( $imageSizes ) {
 
   $my_sizes = array(
     'hero'                  => 'Hero',
@@ -58,7 +58,7 @@ function sandpit_add_custom_image_sizes( $imageSizes ) {
 
 }
 
-add_filter( 'image_size_names_choose', 'sandpit_add_custom_image_sizes' );
+add_filter( 'image_size_names_choose', 'hibiki_add_custom_image_sizes' );
 
 
 // --------------------------------------------------------------------------

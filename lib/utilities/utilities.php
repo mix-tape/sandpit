@@ -35,7 +35,7 @@ add_filter('template_include', array('Roots_Wrapping', 'wrap'), 99);
 
 // returns WordPress subdirectory if applicable
 function wp_base_dir() {
-  preg_match('!(https?://[^/|"]+)([^"]+)?!', site_url(), $matches);
+  preg_match('!(https?://[^/|"]+)([^"]+)?!', home_url(), $matches);
   if (count($matches) === 3) {
     return end($matches);
   } else {
