@@ -8,14 +8,14 @@
 
 
 var gulp = require('gulp'),
-		plugins = require('gulp-load-plugins')(),
-		mainBowerFiles = require('main-bower-files'),
-		browserSync = require('browser-sync'),
-		reload = browserSync.reload,
-		merge = require('merge-stream'),
-		del = require('del'),
-		path = require('path'),
-		fs = require("fs");
+    plugins = require('gulp-load-plugins')(),
+    mainBowerFiles = require('main-bower-files'),
+    browserSync = require('browser-sync'),
+    reload = browserSync.reload,
+    merge = require('merge-stream'),
+    del = require('del'),
+    path = require('path'),
+    fs = require("fs");
 
 // --------------------------------------------------------------------------
 //   Configuration
@@ -24,12 +24,12 @@ var gulp = require('gulp'),
 var bowerrc = JSON.parse(fs.readFileSync('.bowerrc', 'utf8'));
 
 var config = {
-	url: 'hibiki.dev',
-	styles: './assets/styles',
-	scripts: './assets/scripts',
-	images: './assets/images',
-	icons: './assets/icons',
-	vendor: bowerrc.directory
+  url: 'sandpit.dev',
+  styles: './assets/styles',
+  scripts: './assets/scripts',
+  images: './assets/images',
+  icons: './assets/icons',
+  vendor: bowerrc.directory
 }
 
 
@@ -38,7 +38,7 @@ var config = {
 // --------------------------------------------------------------------------
 
 gulp.task('clean', function () {
-	return del(['./style.css']);
+  return del([]);
 });
 
 
@@ -48,45 +48,45 @@ gulp.task('clean', function () {
 
 gulp.task('browser-sync', function() {
 
-	var files = [
-					'**/*.php',
-					'**/*.{png,jpg,gif}'
-				];
+  var files = [
+          '**/*.php',
+          '**/*.{png,jpg,gif}'
+        ];
 
-	browserSync.init({
+  browserSync.init({
 
-		// Read here http://www.browsersync.io/docs/options/
-		proxy: config.url,
-		open: 'external',
-		files: files,
-		// host: "192.168.0.114",
+    // Read here http://www.browsersync.io/docs/options/
+    proxy: config.url,
+    open: 'external',
+    files: files,
+    // host: "192.168.0.114",
 
-		// port: 8080,
+    // port: 8080,
 
-		// Tunnel the Browsersync server through a random Public URL
-		// tunnel: true,
+    // Tunnel the Browsersync server through a random Public URL
+    // tunnel: true,
 
-		// Attempt to use the URL "http://my-private-site.localtunnel.me"
-		// tunnel: "ppress",
+    // Attempt to use the URL "http://my-private-site.localtunnel.me"
+    // tunnel: "ppress",
 
-		// Inject CSS changes
-		injectChanges: true,
+    // Inject CSS changes
+    injectChanges: true,
 
-		middleware: function (req, res, next) {
-			res.setHeader('Access-Control-Allow-Origin', '*');
-			next();
-		},
+    middleware: function (req, res, next) {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      next();
+    },
 
-		// Fix a conflict with the IE8 conditional body tag
-		snippetOptions: {
-			whitelist: ['/wp-admin/admin-ajax.php'],
-			rule: {
-				match: /<\/body>/i,
-				fn: function (snippet, match) { return snippet + match; }
-			}
-		}
+    // Fix a conflict with the IE8 conditional body tag
+    snippetOptions: {
+      whitelist: ['/wp-admin/admin-ajax.php'],
+      rule: {
+        match: /<\/body>/i,
+        fn: function (snippet, match) { return snippet + match; }
+      }
+    }
 
-	});
+  });
 });
 
 
@@ -95,23 +95,23 @@ gulp.task('browser-sync', function() {
 // --------------------------------------------------------------------------
 
 gulp.task('styles', function () {
-	return gulp.src(config.styles + '/main.scss')
-		.pipe(plugins.plumber())
-		.pipe(plugins.cssGlobbing({
-			extensions: ['.css', '.scss']
-		}))
-		.pipe(plugins.sass({
-			style: 'expanded',
-			quiet: true,
-			sourcemap: true,
-			sourcemapPath: './',
-			includePaths: [ config.vendor ]
-		}).on('error', plugins.sass.logError))
-		.pipe(plugins.groupCssMediaQueries())
-		.pipe(plugins.autoprefixer("last 3 version", "> 1%", "ie 8", "ie 7"))
-		.pipe(plugins.rename('style.css'))
-		.pipe(gulp.dest('./'))
-		.pipe(reload({stream:true}));
+  return gulp.src(config.styles + '/main.scss')
+    .pipe(plugins.plumber())
+    .pipe(plugins.cssGlobbing({
+      extensions: ['.css', '.scss']
+    }))
+    .pipe(plugins.sass({
+      style: 'expanded',
+      quiet: true,
+      sourcemap: true,
+      sourcemapPath: './',
+      includePaths: [ config.vendor ]
+    }).on('error', plugins.sass.logError))
+    .pipe(plugins.groupCssMediaQueries())
+    .pipe(plugins.autoprefixer("last 3 version", "> 1%", "ie 8", "ie 7"))
+    .pipe(plugins.rename('styles.css'))
+    .pipe(gulp.dest(config.styles))
+    .pipe(reload({stream:true}));
 });
 
 
@@ -120,23 +120,23 @@ gulp.task('styles', function () {
 // --------------------------------------------------------------------------
 
 gulp.task('ugly-styles', function () {
-	return gulp.src(config.styles + '/main.scss')
-		.pipe(plugins.plumber())
-		.pipe(plugins.cssGlobbing({
-			extensions: ['.css', '.scss']
-		}))
-		.pipe(plugins.sass({
-			style: 'compressed',
-			quiet: true,
-			sourcemap: true,
-			sourcemapPath: '.',
-			includePaths: [ config.vendor ]
-		}).on('error', plugins.sass.logError))
-		.pipe(plugins.groupCssMediaQueries())
-		.pipe(plugins.autoprefixer("last 3 version", "> 1%", "ie 8", "ie 7"))
-		.pipe(plugins.cssnano())
-		.pipe(plugins.rename('style.css'))
-		.pipe(gulp.dest('./'));
+  return gulp.src(config.styles + '/main.scss')
+    .pipe(plugins.plumber())
+    .pipe(plugins.cssGlobbing({
+      extensions: ['.css', '.scss']
+    }))
+    .pipe(plugins.sass({
+      style: 'compressed',
+      quiet: true,
+      sourcemap: true,
+      sourcemapPath: '.',
+      includePaths: [ config.vendor ]
+    }).on('error', plugins.sass.logError))
+    .pipe(plugins.groupCssMediaQueries())
+    .pipe(plugins.autoprefixer("last 3 version", "> 1%", "ie 8", "ie 7"))
+    .pipe(plugins.cssnano())
+    .pipe(plugins.rename('styles.css'))
+    .pipe(gulp.dest(config.styles))
 });
 
 
@@ -145,11 +145,11 @@ gulp.task('ugly-styles', function () {
 // --------------------------------------------------------------------------
 
 gulp.task('bower-scripts', function () {
-	return gulp.src( mainBowerFiles( { filter: /.*\.js$/i } ) )
-		.pipe(plugins.plumber())
-		.pipe(plugins.order(['*jquery.js*', '*angular.js*']))
-		.pipe(plugins.concat('vendor.js'))
-		.pipe(gulp.dest(config.scripts));
+  return gulp.src( mainBowerFiles( { filter: /.*\.js$/i } ) )
+    .pipe(plugins.plumber())
+    .pipe(plugins.order(['*jquery.js*', '*angular.js*']))
+    .pipe(plugins.concat('vendor.js'))
+    .pipe(gulp.dest(config.scripts));
 });
 
 
@@ -158,16 +158,16 @@ gulp.task('bower-scripts', function () {
 // --------------------------------------------------------------------------
 
 gulp.task('bower-ugly-scripts', function () {
-	return gulp.src( mainBowerFiles( { filter: /.*\.js$/i } ) )
-		.pipe(plugins.plumber())
-		.pipe(plugins.order(['*jquery.js*', '*angular.js*']))
-		.pipe(plugins.uglify({
-			mangle: false,
-			compress: false,
-			preserveComments: false
-		}))
-		.pipe(plugins.concat('vendor.js'))
-		.pipe(gulp.dest(config.scripts));
+  return gulp.src( mainBowerFiles( { filter: /.*\.js$/i } ) )
+    .pipe(plugins.plumber())
+    .pipe(plugins.order(['*jquery.js*', '*angular.js*']))
+    .pipe(plugins.uglify({
+      mangle: false,
+      compress: false,
+      preserveComments: false
+    }))
+    .pipe(plugins.concat('vendor.js'))
+    .pipe(gulp.dest(config.scripts));
 });
 
 
@@ -176,11 +176,11 @@ gulp.task('bower-ugly-scripts', function () {
 // --------------------------------------------------------------------------
 
 gulp.task('scripts', function () {
-	return gulp.src( [config.scripts + '/utilities/*.js', config.scripts + '/modules/*.js']  )
-		.pipe(plugins.plumber())
-		.pipe(plugins.order(['module.init.js']))
-		.pipe(plugins.concat('app.js'))
-		.pipe(gulp.dest(config.scripts));
+  return gulp.src( [config.scripts + '/utilities/*.js', config.scripts + '/modules/*.js']  )
+    .pipe(plugins.plumber())
+    .pipe(plugins.order(['module.init.js']))
+    .pipe(plugins.concat('app.js'))
+    .pipe(gulp.dest(config.scripts));
 });
 
 
@@ -189,15 +189,15 @@ gulp.task('scripts', function () {
 // --------------------------------------------------------------------------
 
 gulp.task('ugly-scripts', function () {
-	return gulp.src( [config.scripts + '/utilities/*.js', config.scripts + '/modules/*.js']  )
-		.pipe(plugins.plumber())
-		.pipe(plugins.uglify({
-			mangle: true,
-			compress: true,
-			preserveComments: false
-		}))
-		.pipe(plugins.concat('app.js'))
-		.pipe(gulp.dest(config.scripts));
+  return gulp.src( [config.scripts + '/utilities/*.js', config.scripts + '/modules/*.js']  )
+    .pipe(plugins.plumber())
+    .pipe(plugins.uglify({
+      mangle: true,
+      compress: true,
+      preserveComments: false
+    }))
+    .pipe(plugins.concat('app.js'))
+    .pipe(gulp.dest(config.scripts));
 });
 
 
@@ -206,15 +206,15 @@ gulp.task('ugly-scripts', function () {
 // --------------------------------------------------------------------------
 
 gulp.task('images', function () {
-	return gulp.src([
-			config.images + "/*",
-			config.images + "/**/*"])
-		.pipe(plugins.plumber())
-		.pipe(plugins.imagemin({
-			optimizationLevel: 5,
-			progressive: true
-		}))
-		.pipe(gulp.dest(config.images));
+  return gulp.src([
+      config.images + "/*",
+      config.images + "/**/*"])
+    .pipe(plugins.plumber())
+    .pipe(plugins.imagemin({
+      optimizationLevel: 5,
+      progressive: true
+    }))
+    .pipe(gulp.dest(config.images));
 });
 
 
@@ -224,38 +224,38 @@ gulp.task('images', function () {
 
 gulp.task('compile-icons', function () {
 
-	gulp.src([ config.icons + '/svg/*.svg'])
-		.pipe(plugins.iconfont({
-			fontName: 'icons',
-			fontHeight: 150,
-			normalize: true,
-			descent: 0
-		}))
-		.on('glyphs', function(glyphs, options) {
+  gulp.src([ config.icons + '/svg/*.svg'])
+    .pipe(plugins.iconfont({
+      fontName: 'icons',
+      fontHeight: 150,
+      normalize: true,
+      descent: 0
+    }))
+    .on('glyphs', function(glyphs, options) {
 
-			var options = {
-						glyphs: glyphs,
-						fontName: 'icons',
-						fontPath: 'assets/icons/font/',
-						className: 'icon'
-					};
+      var options = {
+            glyphs: glyphs,
+            fontName: 'icons',
+            fontPath: 'assets/icons/font/',
+            className: 'icon'
+          };
 
-			gulp.src(config.icons + '/templates/icons.scss')
-				.pipe(plugins.consolidate('lodash', options))
-				.pipe(plugins.rename('_icons.scss'))
-				.pipe(gulp.dest( config.styles + '/base/'));
+      gulp.src(config.icons + '/templates/icons.scss')
+        .pipe(plugins.consolidate('lodash', options))
+        .pipe(plugins.rename('_icons.scss'))
+        .pipe(gulp.dest( config.styles + '/base/'));
 
-			gulp.src(config.icons + '/templates/icons.css')
-				.pipe(plugins.consolidate('lodash', options))
-				.pipe(plugins.rename('icons.css'))
-				.pipe(gulp.dest( config.icons + '/css/'));
+      gulp.src(config.icons + '/templates/icons.css')
+        .pipe(plugins.consolidate('lodash', options))
+        .pipe(plugins.rename('icons.css'))
+        .pipe(gulp.dest( config.icons + '/css/'));
 
-			gulp.src(config.icons + '/templates/icons.html')
-				.pipe(plugins.consolidate('lodash', options))
-				.pipe(gulp.dest( config.icons + '/demo/'));
+      gulp.src(config.icons + '/templates/icons.html')
+        .pipe(plugins.consolidate('lodash', options))
+        .pipe(gulp.dest( config.icons + '/demo/'));
 
-		})
-		.pipe(gulp.dest( config.icons + '/font/'));
+    })
+    .pipe(gulp.dest( config.icons + '/font/'));
 });
 
 
@@ -265,9 +265,9 @@ gulp.task('compile-icons', function () {
 
 gulp.task('watch', function () {
 
-	gulp.watch( config.styles + '/**/*.scss', ['styles']);
-	gulp.watch( config.scripts + '/**/*.js', ['scripts']);
-	gulp.watch( './bower.json', ['bower-scripts', reload]);
+  gulp.watch( config.styles + '/**/*.scss', ['styles']);
+  gulp.watch( config.scripts + '/**/*.js', ['scripts']);
+  gulp.watch( './bower.json', ['bower-scripts', reload]);
 
 });
 

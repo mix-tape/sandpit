@@ -27,3 +27,4 @@ config.codekit
 assets/scripts/app.js
 assets/scripts/vendor.js
 style.css
+styles.css
