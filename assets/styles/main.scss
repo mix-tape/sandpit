@@ -108,10 +108,7 @@ $mobile-up:           new-breakpoint(min-width $mobile 12);
 //   Utilities
 // --------------------------------------------------------------------------
 
-@import 'utilities/functions';
-@import 'utilities/mixins';
-@import 'utilities/clearing';
-@import 'utilities/hiding';
+@import 'utilities/*';
 
 
 // --------------------------------------------------------------------------
@@ -119,32 +116,25 @@ $mobile-up:           new-breakpoint(min-width $mobile 12);
 // --------------------------------------------------------------------------
 
 @import 'base/reset';
-@import 'base/typography';
-@import 'base/forms';
-@import 'base/print';
+@import 'base/*';
 
 
 // --------------------------------------------------------------------------
 //   Layout blocks / partials
 // --------------------------------------------------------------------------
 
-@import 'layout/layout';
-@import 'layout/sections';
-@import 'layout/header';
-@import 'layout/footer';
-@import 'layout/navigation';
+@import 'layout/*';
 
 
 // --------------------------------------------------------------------------
 //   Components
 // --------------------------------------------------------------------------
 
-@import 'components/buttons';
+@import 'components/*';
 
 
 // --------------------------------------------------------------------------
 //   Pages
 // --------------------------------------------------------------------------
 
-@import 'pages/standard';
-@import 'pages/home';
+@import 'pages/*';
