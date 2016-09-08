@@ -15,13 +15,13 @@ var gulp = require('gulp'),
     merge = require('merge-stream'),
     del = require('del'),
     path = require('path'),
-    fs = require("fs");
+    fs = require("fs")
 
 // --------------------------------------------------------------------------
 //   Configuration
 // --------------------------------------------------------------------------
 
-var bowerrc = JSON.parse(fs.readFileSync('.bowerrc', 'utf8'));
+var bowerrc = JSON.parse(fs.readFileSync('.bowerrc', 'utf8'))
 
 var config = {
   url: 'sandpit.dev',
@@ -38,8 +38,8 @@ var config = {
 // --------------------------------------------------------------------------
 
 gulp.task('clean', function () {
-  return del([]);
-});
+  return del([])
+})
 
 
 // --------------------------------------------------------------------------
@@ -49,9 +49,9 @@ gulp.task('clean', function () {
 gulp.task('browser-sync', function() {
 
   var files = [
-          '**/*.php',
-          '**/*.{png,jpg,gif}'
-        ];
+        '**/*.php',
+        '**/*.{png,jpg,gif}'
+      ]
 
   browserSync.init({
 
@@ -73,8 +73,8 @@ gulp.task('browser-sync', function() {
     injectChanges: true,
 
     middleware: function (req, res, next) {
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      next();
+      res.setHeader('Access-Control-Allow-Origin', '*')
+      next()
     },
 
     // Fix a conflict with the IE8 conditional body tag
@@ -82,12 +82,12 @@ gulp.task('browser-sync', function() {
       whitelist: ['/wp-admin/admin-ajax.php'],
       rule: {
         match: /<\/body>/i,
-        fn: function (snippet, match) { return snippet + match; }
+        fn: function (snippet, match) { return snippet + match }
       }
     }
 
-  });
-});
+  })
+})
 
 
 // --------------------------------------------------------------------------
@@ -95,24 +95,25 @@ gulp.task('browser-sync', function() {
 // --------------------------------------------------------------------------
 
 gulp.task('styles', function () {
-  return gulp.src(config.styles + '/main.scss')
-    .pipe(plugins.plumber())
-    .pipe(plugins.cssGlobbing({
+  return gulp.src( config.styles + '/main.scss' )
+    .pipe( plugins.plumber() )
+    .pipe( plugins.cssGlobbing({
       extensions: ['.css', '.scss']
     }))
-    .pipe(plugins.sass({
+    .pipe( plugins.sass({
       style: 'expanded',
       quiet: true,
       sourcemap: true,
       sourcemapPath: './',
       includePaths: [ config.vendor ]
-    }).on('error', plugins.sass.logError))
-    .pipe(plugins.groupCssMediaQueries())
-    .pipe(plugins.autoprefixer("last 3 version", "> 1%", "ie 8", "ie 7"))
-    .pipe(plugins.rename('styles.css'))
-    .pipe(gulp.dest(config.styles))
-    .pipe(reload({stream:true}));
-});
+    })
+    .on( 'error', plugins.sass.logError) )
+    .pipe( plugins.groupCssMediaQueries() )
+    .pipe( plugins.autoprefixer("last 3 version", "> 1%", "ie 8", "ie 7") )
+    .pipe( plugins.rename('styles.css') )
+    .pipe( gulp.dest(config.styles) )
+    .pipe( reload({stream:true}) )
+})
 
 
 // --------------------------------------------------------------------------
@@ -120,85 +121,66 @@ gulp.task('styles', function () {
 // --------------------------------------------------------------------------
 
 gulp.task('ugly-styles', function () {
-  return gulp.src(config.styles + '/main.scss')
-    .pipe(plugins.plumber())
-    .pipe(plugins.cssGlobbing({
+  return gulp.src( config.styles + '/main.scss' )
+    .pipe( plugins.plumber() )
+    .pipe( plugins.cssGlobbing({
       extensions: ['.css', '.scss']
     }))
-    .pipe(plugins.sass({
+    .pipe( plugins.sass({
       style: 'compressed',
       quiet: true,
       sourcemap: true,
       sourcemapPath: '.',
       includePaths: [ config.vendor ]
-    }).on('error', plugins.sass.logError))
-    .pipe(plugins.groupCssMediaQueries())
-    .pipe(plugins.autoprefixer("last 3 version", "> 1%", "ie 8", "ie 7"))
-    .pipe(plugins.cssnano())
-    .pipe(plugins.rename('styles.css'))
-    .pipe(gulp.dest(config.styles))
-});
+    })
+    .on( 'error', plugins.sass.logError) )
+    .pipe( plugins.groupCssMediaQueries() )
+    .pipe( plugins.autoprefixer("last 3 version", "> 1%", "ie 8", "ie 7") )
+    .pipe( plugins.cssnano() )
+    .pipe( plugins.rename('styles.css') )
+    .pipe( gulp.dest(config.styles) )
+})
 
 
 // --------------------------------------------------------------------------
-//   Concat all script files required into `vendor.js`
+//   Concat all user script files required into `global.js`
 // --------------------------------------------------------------------------
 
-gulp.task('bower-scripts', function () {
-  return gulp.src( mainBowerFiles( { filter: /.*\.js$/i } ) )
-    .pipe(plugins.plumber())
-    .pipe(plugins.order(['*jquery.js*', '*angular.js*']))
-    .pipe(plugins.concat('vendor.js'))
-    .pipe(gulp.dest(config.scripts));
-});
+gulp.task('scripts', function () {
 
+  var scripts = mainBowerFiles( { filter: /.*\.js$/i } )
 
-// --------------------------------------------------------------------------
-//   Concat + uglify all script files required into `vendor,js`
-// --------------------------------------------------------------------------
+  scripts.push( config.scripts + '/utilities/*.js', config.scripts + '/components/*.js' )
 
-gulp.task('bower-ugly-scripts', function () {
-  return gulp.src( mainBowerFiles( { filter: /.*\.js$/i } ) )
-    .pipe(plugins.plumber())
-    .pipe(plugins.order(['*jquery.js*', '*angular.js*']))
-    .pipe(plugins.uglify({
-      mangle: false,
-      compress: false,
-      preserveComments: false
-    }))
-    .pipe(plugins.concat('vendor.js'))
-    .pipe(gulp.dest(config.scripts));
-});
+  return gulp.src( scripts )
+    .pipe( plugins.plumber() )
+    .pipe( plugins.order( ['*jquery.js*', '*angular.js*', 'vendor.js', 'module.init.js'] ) )
+    .pipe( plugins.concat('global.js') )
+    .pipe( gulp.dest( config.scripts ) )
+})
 
 
 // --------------------------------------------------------------------------
-//   Concat all user script files required into `scripts.js`
+//   Concat all user script files required into `global.js`
 // --------------------------------------------------------------------------
 
-gulp.task('scripts', ['bower-scripts'], function () {
-  return gulp.src( [config.scripts + '/utilities/*.js', config.scripts + '/components/*.js']  )
-    .pipe(plugins.plumber())
-    .pipe(plugins.order(['module.init.js']))
-    .pipe(plugins.concat('global.js'))
-    .pipe(gulp.dest(config.scripts));
-});
+gulp.task('scripts', function () {
 
+  var scripts = mainBowerFiles( { filter: /.*\.js$/i } )
 
-// --------------------------------------------------------------------------
-//   Concat all user script files required into `scripts.js`
-// --------------------------------------------------------------------------
+  scripts.push( config.scripts + '/utilities/*.js', config.scripts + '/components/*.js' )
 
-gulp.task('ugly-scripts', ['bower-ugly-scripts'], function () {
-  return gulp.src( [config.scripts + '/utilities/*.js', config.scripts + '/components/*.js']  )
-    .pipe(plugins.plumber())
-    .pipe(plugins.uglify({
+  return gulp.src( scripts )
+    .pipe( plugins.plumber() )
+    .pipe( plugins.order( ['*jquery.js*', '*angular.js*', 'vendor.js', 'module.init.js'] ) )
+    .pipe( plugins.uglify({
       mangle: true,
       compress: true,
       preserveComments: false
     }))
-    .pipe(plugins.concat('global.js'))
-    .pipe(gulp.dest(config.scripts));
-});
+    .pipe( plugins.concat('global.js') )
+    .pipe( gulp.dest( config.scripts ) )
+})
 
 
 // --------------------------------------------------------------------------
@@ -208,14 +190,14 @@ gulp.task('ugly-scripts', ['bower-ugly-scripts'], function () {
 gulp.task('images', function () {
   return gulp.src([
       config.images + "/*",
-      config.images + "/**/*"])
-    .pipe(plugins.plumber())
-    .pipe(plugins.imagemin({
+      config.images + "/**/*"] )
+    .pipe( plugins.plumber() )
+    .pipe( plugins.imagemin({
       optimizationLevel: 5,
       progressive: true
     }))
-    .pipe(gulp.dest(config.images));
-});
+    .pipe( gulp.dest(config.images) )
+})
 
 
 // --------------------------------------------------------------------------
@@ -224,8 +206,8 @@ gulp.task('images', function () {
 
 gulp.task('compile-icons', function () {
 
-  gulp.src([ config.icons + '/svg/*.svg'])
-    .pipe(plugins.iconfont({
+  gulp.src( [ config.icons + '/svg/*.svg'])
+    .pipe( plugins.iconfont({
       fontName: 'icons',
       fontHeight: 150,
       normalize: true,
@@ -238,25 +220,25 @@ gulp.task('compile-icons', function () {
             fontName: 'icons',
             fontPath: 'assets/icons/font/',
             className: 'icon'
-          };
+          }
 
-      gulp.src(config.icons + '/templates/icons.scss')
-        .pipe(plugins.consolidate('lodash', options))
-        .pipe(plugins.rename('_icons.scss'))
-        .pipe(gulp.dest( config.styles + '/base/'));
+      gulp.src( config.icons + '/templates/icons.scss' )
+        .pipe( plugins.consolidate('lodash', options) )
+        .pipe( plugins.rename('_icons.scss') )
+        .pipe( gulp.dest( config.styles + '/base/') )
 
-      gulp.src(config.icons + '/templates/icons.css')
-        .pipe(plugins.consolidate('lodash', options))
-        .pipe(plugins.rename('icons.css'))
-        .pipe(gulp.dest( config.icons + '/css/'));
+      gulp.src( config.icons + '/templates/icons.css' )
+        .pipe( plugins.consolidate('lodash', options) )
+        .pipe( plugins.rename('icons.css') )
+        .pipe( gulp.dest( config.icons + '/css/') )
 
-      gulp.src(config.icons + '/templates/icons.html')
-        .pipe(plugins.consolidate('lodash', options))
-        .pipe(gulp.dest( config.icons + '/demo/'));
+      gulp.src( config.icons + '/templates/icons.html' )
+        .pipe( plugins.consolidate('lodash', options) )
+        .pipe( gulp.dest( config.icons + '/demo/') )
 
     })
-    .pipe(gulp.dest( config.icons + '/font/'));
-});
+    .pipe( gulp.dest( config.icons + '/font/') )
+})
 
 
 // --------------------------------------------------------------------------
@@ -265,22 +247,29 @@ gulp.task('compile-icons', function () {
 
 gulp.task('watch', function () {
 
-  gulp.watch( config.styles + '/**/*.scss', ['styles']);
-  gulp.watch( config.scripts + '/**/*.js', ['scripts']);
-  gulp.watch( './bower.json', ['bower-scripts', reload]);
+  gulp.watch( config.styles + '/**/*.scss', ['styles'] )
+  gulp.watch( ['./bower.json', config.scripts + '/**/*.js'], ['scripts'] )
 
-});
+})
+
+
+gulp.task('watch-build', function () {
+
+  gulp.watch( config.styles + '/**/*.scss', ['ugly-styles'] )
+  gulp.watch( ['./bower.json', config.scripts + '/**/*.js'], ['ugly-scripts'] )
+
+})
 
 
 // --------------------------------------------------------------------------
 //   Run development level tasks, and watch for changes
 // --------------------------------------------------------------------------
 
-gulp.task('default', [ 'clean', 'styles', 'bower-scripts', 'scripts', 'browser-sync', 'watch']);
+gulp.task('default', [ 'clean', 'styles', 'scripts', 'browser-sync', 'watch'])
 
 
 // --------------------------------------------------------------------------
 //   Run production tasks including minfication, and without watch
 // --------------------------------------------------------------------------
 
-gulp.task('build', ['clean', 'ugly-styles', 'bower-ugly-scripts', 'ugly-scripts']);
+gulp.task('build', ['clean', 'ugly-styles', 'ugly-scripts'])
