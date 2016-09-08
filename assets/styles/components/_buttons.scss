@@ -31,12 +31,11 @@
 
   &:active, &.active {
     outline: 0;
-    box-shadow: 0 0 0 1px rgba(0,0,0,.15) inset,0 0 6px rgba(0,0,0,.2) inset;
   }
 
   &.disabled, &[disabled] {
     background-image: none;
-    @include opacity(0.4);
+    opacity: 0.4;
     cursor: not-allowed;
     box-shadow: none;
   }
