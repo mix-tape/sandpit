@@ -15,8 +15,7 @@ function hibiki_enqueue_scripts() {
 
   // Queue Scripts
 
-  wp_enqueue_script( 'jquery', get_bloginfo('template_url') . '/assets/scripts/vendor.js', '', '', true ); // Name the vendor scripts jquery as this is often required by plugins
-  wp_enqueue_script( 'hibiki-scripts', get_bloginfo('template_url') . '/assets/scripts/global.js', 'jquery', '', true );
+  wp_enqueue_script( 'jquery', get_bloginfo('template_url') . '/assets/scripts/global.js', '', '', true ); // Name the vendor scripts jquery as this is often required by plugins
 
   // Queue Styles
 
