@@ -47,16 +47,10 @@ input[type="reset"] {
 textarea,
 select {
   max-width: 100%;
+  width: 100%;
   border: $form-element-border;
   padding: 5px 10px;
   font-weight: normal;
-
-  &.medium {
-    width: 48%;
-  }
-  &.large {
-    width: 100%;
-  }
 }
 
 #{$all-text-inputs-hover},
