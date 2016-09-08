@@ -22,12 +22,12 @@
 }
 
 
-.section {
+.wrapper {
   display: block;
   position: relative;
   padding: $gap * 2 $gap;
 }
 
-  .center {
+  .container {
     @include center;
   }

@@ -1,4 +1,8 @@
 
+<div class="wrapper page-content">
+
+  <div class="container">
+
   <?php if (!have_posts()) : ?>
 
     <div class="alert">
@@ -75,3 +79,7 @@
     </nav>
 
   <?php endif; ?>
+
+  </div>
+
+</div>

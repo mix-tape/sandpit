@@ -1,15 +1,11 @@
-  <header class="main">
+  <header class="wrapper header">
 
     <div class="container">
 
       <a class="brand" href="<?php echo home_url(); ?>/"><?php bloginfo('name'); ?></a>
 
-      <nav class="primary-navigation">
-
-        <?php if (has_nav_menu('primary')) wp_nav_menu(array('theme_location' => 'primary_navigation')); ?>
-
-      </nav>
-
     </div>
 
   </header>
+
+  <?php get_template_part('templates/layout/navigation') ?>

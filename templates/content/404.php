@@ -1,5 +1,5 @@
 
-  <section class="page">
+  <section class="wrapper page-content">
 
     <div class="container">
 
