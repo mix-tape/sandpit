@@ -18,9 +18,12 @@ function hibiki_body_classes($classes) {
   //   Add post/page slug
   // --------------------------------------------------------------------------
 
-  if (is_single() || is_page() && !is_front_page()) {
-    $classes[] = basename(get_permalink());
+  global $post;
+
+  if (!is_home() && is_single() && $post) {
+    $classes[] = get_post_type($post->ID) . '-' . $post->post_name;
   }
+
 
   // --------------------------------------------------------------------------
   //   Remove unnecessary classes
