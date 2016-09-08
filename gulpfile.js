@@ -141,7 +141,7 @@ gulp.task('ugly-styles', function () {
 
 
 // --------------------------------------------------------------------------
-//   Concat all script files required into `plugins.js`
+//   Concat all script files required into `vendor.js`
 // --------------------------------------------------------------------------
 
 gulp.task('bower-scripts', function () {
@@ -154,7 +154,7 @@ gulp.task('bower-scripts', function () {
 
 
 // --------------------------------------------------------------------------
-//   Concat + uglify all script files required into `all.min.js`
+//   Concat + uglify all script files required into `vendor,js`
 // --------------------------------------------------------------------------
 
 gulp.task('bower-ugly-scripts', function () {
@@ -175,11 +175,11 @@ gulp.task('bower-ugly-scripts', function () {
 //   Concat all user script files required into `scripts.js`
 // --------------------------------------------------------------------------
 
-gulp.task('scripts', function () {
-  return gulp.src( [config.scripts + '/utilities/*.js', config.scripts + '/modules/*.js']  )
+gulp.task('scripts', ['bower-scripts'], function () {
+  return gulp.src( [config.scripts + '/utilities/*.js', config.scripts + '/components/*.js']  )
     .pipe(plugins.plumber())
     .pipe(plugins.order(['module.init.js']))
-    .pipe(plugins.concat('app.js'))
+    .pipe(plugins.concat('global.js'))
     .pipe(gulp.dest(config.scripts));
 });
 
@@ -188,15 +188,15 @@ gulp.task('scripts', function () {
 //   Concat all user script files required into `scripts.js`
 // --------------------------------------------------------------------------
 
-gulp.task('ugly-scripts', function () {
-  return gulp.src( [config.scripts + '/utilities/*.js', config.scripts + '/modules/*.js']  )
+gulp.task('ugly-scripts', ['bower-ugly-scripts'], function () {
+  return gulp.src( [config.scripts + '/utilities/*.js', config.scripts + '/components/*.js']  )
     .pipe(plugins.plumber())
     .pipe(plugins.uglify({
       mangle: true,
       compress: true,
       preserveComments: false
     }))
-    .pipe(plugins.concat('app.js'))
+    .pipe(plugins.concat('global.js'))
     .pipe(gulp.dest(config.scripts));
 });
 
@@ -276,11 +276,11 @@ gulp.task('watch', function () {
 //   Run development level tasks, and watch for changes
 // --------------------------------------------------------------------------
 
-gulp.task('default', [ 'clean', 'styles', 'scripts', 'bower-scripts', 'browser-sync', 'watch']);
+gulp.task('default', [ 'clean', 'styles', 'bower-scripts', 'scripts', 'browser-sync', 'watch']);
 
 
 // --------------------------------------------------------------------------
 //   Run production tasks including minfication, and without watch
 // --------------------------------------------------------------------------
 
-gulp.task('build', ['clean', 'ugly-styles', 'bower-ugly-scripts', 'scripts']);
+gulp.task('build', ['clean', 'ugly-styles', 'bower-ugly-scripts', 'ugly-scripts']);
