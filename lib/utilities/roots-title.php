@@ -20,20 +20,20 @@ function roots_title() {
     } elseif (is_post_type_archive()) {
       echo get_queried_object()->labels->name;
     } elseif (is_day()) {
-      printf(__('Daily Archives: %s', 'roots'), get_the_date());
+      printf('Daily Archives: %s', get_the_date());
     } elseif (is_month()) {
-      printf(__('Monthly Archives: %s', 'roots'), get_the_date('F Y'));
+      printf('Monthly Archives: %s', get_the_date('F Y'));
     } elseif (is_year()) {
-      printf(__('Yearly Archives: %s', 'roots'), get_the_date('Y'));
+      printf('Yearly Archives: %s', get_the_date('Y'));
     } elseif (is_author()) {
       global $post;
       $author_id = $post->post_author;
-      printf(__('Author Archives: %s', 'roots'), get_the_author_meta('display_name', $author_id));
+      printf('Author Archives: %s', get_the_author_meta('display_name', $author_id));
     } else {
       single_cat_title();
     }
   } elseif (is_search()) {
-    printf(__('Search Results for %s', 'roots'), get_search_query());
+    printf('Search Results for %s', get_search_query());
   } elseif (is_404()) {
     _e('File Not Found', 'roots');
   } else {

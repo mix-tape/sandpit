@@ -34,8 +34,8 @@ function roots_theme_activation_options_add_page() {
 
   if ($roots_activation_options['first_run']) {
     $theme_page = add_theme_page(
-      __('Theme Activation', 'roots'),
-      __('Theme Activation', 'roots'),
+      'Theme Activation',
+      'Theme Activation',
       'edit_theme_options',
       'theme_activation_options',
       'roots_theme_activation_options_render_page'
@@ -71,7 +71,7 @@ function roots_get_theme_activation_options() {
 function roots_theme_activation_options_render_page() { ?>
   <div class="wrap">
     <?php screen_icon(); ?>
-    <h2><?php printf(__('%s Theme Activation', 'roots'), wp_get_theme()); ?></h2>
+    <h2><?php printf('%s Theme Activation', wp_get_theme()); ?></h2>
     <?php settings_errors(); ?>
 
     <form method="post" action="options.php">
@@ -94,7 +94,7 @@ function roots_theme_activation_options_render_page() { ?>
                 <option value="false"><?php echo _e('No', 'roots'); ?></option>
               </select>
               <br>
-              <small class="description"><?php printf(__('Create a page called Home and set it to be the static front page', 'roots')); ?></small>
+              <small class="description"><?php printf('Create a page called Home and set it to be the static front page'); ?></small>
             </fieldset>
           </td>
         </tr>
@@ -107,7 +107,7 @@ function roots_theme_activation_options_render_page() { ?>
                 <option value="false"><?php echo _e('No', 'roots'); ?></option>
               </select>
               <br>
-              <small class="description"><?php printf(__('Change permalink structure to /&#37;postname&#37;/', 'roots')); ?></small>
+              <small class="description"><?php printf('Change permalink structure to /&#37;postname&#37;/'); ?></small>
             </fieldset>
           </td>
         </tr>
@@ -120,7 +120,7 @@ function roots_theme_activation_options_render_page() { ?>
                 <option value="false"><?php echo _e('No', 'roots'); ?></option>
               </select>
               <br>
-              <small class="description"><?php printf(__('Change uploads folder to /assets/ instead of /wp-content/uploads/', 'roots')); ?></small>
+              <small class="description"><?php printf('Change uploads folder to /assets/ instead of /wp-content/uploads/'); ?></small>
             </fieldset>
           </td>
         </tr>
@@ -133,7 +133,7 @@ function roots_theme_activation_options_render_page() { ?>
                 <option value="false"><?php echo _e('No', 'roots'); ?></option>
               </select>
               <br>
-              <small class="description"><?php printf(__('Create the Primary Navigation menu and set the location', 'roots')); ?></small>
+              <small class="description"><?php printf('Create the Primary Navigation menu and set the location'); ?></small>
             </fieldset>
           </td>
         </tr>
@@ -146,7 +146,7 @@ function roots_theme_activation_options_render_page() { ?>
                 <option value="false"><?php echo _e('No', 'roots'); ?></option>
               </select>
               <br>
-              <small class="description"><?php printf(__('Add all current published pages to the Primary Navigation', 'roots')); ?></small>
+              <small class="description"><?php printf('Add all current published pages to the Primary Navigation'); ?></small>
             </fieldset>
           </td>
         </tr>

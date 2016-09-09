@@ -3,13 +3,15 @@
 
     <div class="container">
 
-      <p><?php _e('The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.', 'roots'); ?></p>
+      <h1><?php echo roots_title(); ?></h1>
 
-      <p><?php _e('Please try the following:', 'roots'); ?></p>
+      <p>The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
+
+      <p>Please try the following:</p>
       <ul>
-        <li><?php _e('Check your spelling', 'roots'); ?></li>
-        <li><?php printf(__('Return to the <a href="%s">home page</a>', 'roots'), home_url()); ?></li>
-        <li><?php _e('Click the <a href="javascript:history.back()">Back</a> button', 'roots'); ?></li>
+        <li>Check your spelling</li>
+        <li>Return to the <a href="<?php echo home_url() ?>">home page</a></li>
+        <li>Click the <a href="javascript:history.back()">Back</a> button</li>
       </ul>
 
       <?php get_search_form(); ?>
