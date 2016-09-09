@@ -1,32 +1,34 @@
 
-  <?php while (have_posts()) : the_post(); ?>
+  <div class="wrapper page-content">
 
-    <article <?php post_class() ?> id="post-<?php the_ID(); ?>">
+    <?php while (have_posts()) : the_post(); ?>
 
-      <header>
+      <article <?php post_class('container article') ?> id="post-<?php the_ID(); ?>">
 
-        <h1 class="entry-title"><?php the_title(); ?></h1>
+        <header class="article-header">
 
-        <?php get_template_part('templates/modules/entry-meta'); ?>
+          <h1><?php echo roots_title(); ?></h1>
 
-      </header>
+          <?php get_template_part('templates/modules/entry-meta'); ?>
 
-      <div class="entry-content">
+        </header>
 
-        <?php the_content(); ?>
+        <div class="article-content">
 
-      </div>
+          <?php the_content(); ?>
 
-      <footer>
+        </div>
 
-        <?php wp_link_pages(array('before' => '<nav id="page-nav"><p>' . __('Pages:', 'roots'), 'after' => '</p></nav>')); ?>
+        <footer class="article-footer">
 
-        <?php the_tags('<ul class="entry-tags"><li>','</li><li>','</li></ul>'); ?>
+          <?php the_tags('<ul class="entry-tags"><li>','</li><li>','</li></ul>'); ?>
 
-      </footer>
+        </footer>
 
-      <?php comments_template('/templates/modules/comments.php'); ?>
+        <?php comments_template('/templates/modules/comments.php'); ?>
 
-    </article>
+      </article>
 
-  <?php endwhile; ?>
+    <?php endwhile; ?>
+
+  </div>

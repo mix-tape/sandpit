@@ -1,85 +1,85 @@
 
-<div class="wrapper page-content">
+  <div class="wrapper page-content">
 
-  <div class="container">
+    <div class="container">
 
-  <?php if (!have_posts()) : ?>
+    <?php if (!have_posts()) : ?>
 
-    <div class="alert">
+      <div class="alert">
 
-      <p><?php _e('Sorry, no results were found.', 'roots'); ?></p>
-
-    </div>
-
-    <?php get_search_form(); ?>
-
-  <?php endif; ?>
-
-
-
-  <?php while (have_posts()) : the_post(); ?>
-
-    <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-
-      <header>
-
-        <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-
-        <?php get_template_part('templates/entry-meta'); ?>
-
-      </header>
-
-      <div class="entry-summary">
-
-        <?php the_excerpt(); ?>
+        <p><?php _e('Sorry, no results were found.', 'roots'); ?></p>
 
       </div>
 
-      <footer>
+      <?php get_search_form(); ?>
 
-        <?php the_tags('<ul class="entry-tags"><li>','</li><li>','</li></ul>'); ?>
-
-      </footer>
-
-    </article>
-
-  <?php endwhile; ?>
+    <?php endif; ?>
 
 
 
-  <?php if ($wp_query->max_num_pages > 1) : ?>
+    <?php while (have_posts()) : the_post(); ?>
 
-    <nav id="post-nav">
+      <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+
+        <header>
+
+          <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+
+          <?php get_template_part('templates/entry-meta'); ?>
+
+        </header>
+
+        <div class="entry-summary">
+
+          <?php the_excerpt(); ?>
+
+        </div>
+
+        <footer>
+
+          <?php the_tags('<ul class="entry-tags"><li>','</li><li>','</li></ul>'); ?>
+
+        </footer>
+
+      </article>
+
+    <?php endwhile; ?>
 
 
-      <ul class="pager">
 
-        <?php if (get_next_posts_link()) : ?>
+    <?php if ($wp_query->max_num_pages > 1) : ?>
 
-          <li class="previous"><?php next_posts_link(__('&larr; Older posts', 'roots')); ?></li>
+      <nav id="post-nav">
 
-        <?php else: ?>
 
-          <li class="previous disabled"><a><?php _e('&larr; Older posts', 'roots'); ?></a></li>
+        <ul class="pager">
 
-        <?php endif; ?>
+          <?php if (get_next_posts_link()) : ?>
 
-        <?php if (get_previous_posts_link()) : ?>
+            <li class="previous"><?php next_posts_link(''); ?></li>
 
-          <li class="next"><?php previous_posts_link(__('Newer posts &rarr;', 'roots')); ?></li>
+          <?php else: ?>
 
-        <?php else: ?>
+            <li class="previous disabled"><a><?php _e('&larr; Older posts', 'roots'); ?></a></li>
 
-          <li class="next disabled"><a><?php _e('Newer posts &rarr;', 'roots'); ?></a></li>
+          <?php endif; ?>
 
-        <?php endif; ?>
+          <?php if (get_previous_posts_link()) : ?>
 
-      </ul>
+            <li class="next"><?php previous_posts_link(''); ?></li>
 
-    </nav>
+          <?php else: ?>
 
-  <?php endif; ?>
+            <li class="next disabled"><a><?php _e('Newer posts &rarr;', 'roots'); ?></a></li>
+
+          <?php endif; ?>
+
+        </ul>
+
+      </nav>
+
+    <?php endif; ?>
+
+    </div>
 
   </div>
-
-</div>

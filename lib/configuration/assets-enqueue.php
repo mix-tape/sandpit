@@ -12,6 +12,7 @@ function hibiki_enqueue_scripts() {
 
   wp_deregister_script( 'jquery' );
   wp_deregister_script( 'comment-reply' );
+  wp_deregister_script( 'wp-embed' );
 
   // Queue Scripts
 
