@@ -24,7 +24,7 @@ var gulp = require('gulp'),
 var bowerrc = JSON.parse(fs.readFileSync('.bowerrc', 'utf8'))
 
 var config = {
-  url: 'sandpit.dev',
+  url: 'hibiki.dev',
   styles: './assets/styles',
   scripts: './assets/scripts',
   images: './assets/images',
@@ -61,7 +61,7 @@ gulp.task('browser-sync', function() {
     files: files,
     // host: "192.168.0.114",
 
-    // port: 8080,
+    port: 3002,
 
     // Tunnel the Browsersync server through a random Public URL
     // tunnel: true,
@@ -150,11 +150,11 @@ gulp.task('scripts', function () {
 
   var scripts = mainBowerFiles( { filter: /.*\.js$/i } )
 
-  scripts.push( config.scripts + '/utilities/*.js', config.scripts + '/components/*.js' )
+  scripts.push( config.scripts + '/utilities/*.js', config.scripts + '/modules/*.js' )
 
   return gulp.src( scripts )
     .pipe( plugins.plumber() )
-    .pipe( plugins.order( ['*jquery.js*', '*angular.js*', 'vendor.js', 'module.init.js'] ) )
+    .pipe( plugins.order( ['*jquery.js*', '*angular.js*', 'module.init.js'] ) )
     .pipe( plugins.concat('global.js') )
     .pipe( gulp.dest( config.scripts ) )
 })
@@ -164,15 +164,15 @@ gulp.task('scripts', function () {
 //   Concat all user script files required into `global.js`
 // --------------------------------------------------------------------------
 
-gulp.task('scripts', function () {
+gulp.task('ugly-scripts', function () {
 
   var scripts = mainBowerFiles( { filter: /.*\.js$/i } )
 
-  scripts.push( config.scripts + '/utilities/*.js', config.scripts + '/components/*.js' )
+  scripts.push( config.scripts + '/utilities/*.js', config.scripts + '/modules/*.js' )
 
   return gulp.src( scripts )
     .pipe( plugins.plumber() )
-    .pipe( plugins.order( ['*jquery.js*', '*angular.js*', 'vendor.js', 'module.init.js'] ) )
+    .pipe( plugins.order( ['*jquery.js*', '*angular.js*', 'module.init.js'] ) )
     .pipe( plugins.uglify({
       mangle: true,
       compress: true,
@@ -248,7 +248,7 @@ gulp.task('icons', function () {
 gulp.task('watch', function () {
 
   gulp.watch( config.styles + '/**/*.scss', ['styles'] )
-  gulp.watch( ['./bower.json', config.scripts + '/**/*.js'], ['scripts'] )
+  gulp.watch( ['./bower.json', config.scripts + '/**/*.js', '!' + config.scripts + '/global.js'], ['scripts'] )
 
 })
 
