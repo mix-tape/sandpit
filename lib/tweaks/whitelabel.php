@@ -17,7 +17,7 @@ if ( function_exists('acf_add_options_page') )
     'page_title'   => 'Birdbrain Settings',
     'menu_title'  => 'Birdbrain',
     'menu_slug'   => 'birdbrain',
-    'icon_url'    =>  get_template_directory_uri() . '/lib/images/bb.png',
+    'icon_url'    =>  get_template_directory_uri() . '/lib/images/birdbrain-icon.png',
     'capability'  => 'edit_posts',
     'redirect'    => true
   ));

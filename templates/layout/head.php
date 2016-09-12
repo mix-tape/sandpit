@@ -8,8 +8,12 @@
 
 <title><?php wp_title(); ?></title>
 
-<!-- Mobile specific -->
+<!-- Viewport Settings -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+<!-- Icons -->
+<link rel="shortcut icon" href="<?php bloginfo('template_url'); ?>/assets/images/favicon.ico">
+<link rel="apple-touch-icon" href="<?php bloginfo('template_url'); ?>/assets/images/apple-touch-icon.png">
 
 <!-- Start Wordpress Head -->
 <?php wp_head(); ?>
