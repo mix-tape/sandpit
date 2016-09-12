@@ -204,7 +204,7 @@ gulp.task('images', function () {
 //   Compile Fonts
 // --------------------------------------------------------------------------
 
-gulp.task('compile-icons', function () {
+gulp.task('icons', function () {
 
   gulp.src( [ config.icons + '/svg/*.svg'])
     .pipe( plugins.iconfont({
@@ -218,7 +218,7 @@ gulp.task('compile-icons', function () {
       var options = {
             glyphs: glyphs,
             fontName: 'icons',
-            fontPath: 'assets/icons/font/',
+            fontPath: '../icons/font/',
             className: 'icon'
           }
 
