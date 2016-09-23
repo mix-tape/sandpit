@@ -25,9 +25,8 @@ add_theme_support( 'html5', array('search-form', 'comment-form', 'comment-list',
 add_filter( 'jpeg_quality', create_function( '', 'return 80;' ) );
 add_filter( 'wp_editor_set_quality', create_function( '', 'return 80;' ) );
 
-set_post_thumbnail_size( 150, 150, true );
+set_post_thumbnail_size( 300, 300, true );
 add_image_size( 'hero', 1920, 900, true );
-add_image_size( 'single-post-thumbnail', 300, 300, true );
 
 
 update_option('large_size_w', 650);
@@ -52,8 +51,7 @@ update_option('image_default_size', 'large' );
 function hibiki_add_custom_image_sizes( $imageSizes ) {
 
   $my_sizes = array(
-    'hero'                  => 'Hero',
-    'single-post-thumbnail' => 'Single Post Thumbnail'
+    'hero' => 'Hero',
   );
 
   return array_merge( $imageSizes, $my_sizes );
