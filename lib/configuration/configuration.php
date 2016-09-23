@@ -13,7 +13,8 @@
 add_theme_support( 'rewrite-urls' );          // Enable URL rewrites
 add_theme_support( 'h5bp-htaccess' );         // Enable HTML5 Boilerplate's .htaccess
 add_theme_support( 'automatic-feed-links' );
-add_theme_support( 'nav-menus' );
+add_theme_support( 'menus' );
+add_theme_support( 'title-tag' );
 add_theme_support( 'html5', array('search-form', 'comment-form', 'comment-list', 'caption', 'gallery') );
 
 
