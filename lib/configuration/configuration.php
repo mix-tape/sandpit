@@ -67,7 +67,7 @@ add_filter( 'image_size_names_choose', 'hibiki_add_custom_image_sizes' );
 // --------------------------------------------------------------------------
 
 register_nav_menus( array(
-  'primary' => __( 'Primary Navigation' ),
+  'primary' => 'Primary Navigation',
 ) );
 
 
@@ -76,7 +76,7 @@ register_nav_menus( array(
 // --------------------------------------------------------------------------
 
 register_sidebar(array(
-  'name'          => __( 'Primary Widget Area' ),
+  'name'          => 'Primary Widget Area',
   'id'            => 'primary-widget-area',
   'before_widget' => '<section id="%1$s" class="widget %2$s">',
   'after_widget'  => '</section>',
