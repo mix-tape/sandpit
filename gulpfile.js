@@ -17,6 +17,7 @@ var gulp = require('gulp'),
     path = require('path'),
     fs = require("fs")
 
+
 // --------------------------------------------------------------------------
 //   Configuration
 // --------------------------------------------------------------------------
@@ -48,6 +49,8 @@ gulp.task('clean', function () {
 
 gulp.task('browser-sync', function() {
 
+  // Watch these files and trigger reload
+
   var files = [
         '**/*.php',
         '**/*.{png,jpg,gif}'
@@ -72,12 +75,13 @@ gulp.task('browser-sync', function() {
     // Inject CSS changes
     injectChanges: true,
 
+    // Fix cross origin resource issues
     middleware: function (req, res, next) {
       res.setHeader('Access-Control-Allow-Origin', '*')
       next()
     },
 
-    // Fix a conflict with the IE8 conditional body tag
+    // Place browsersync snippet at bottom to fix a conflict with the IE8 conditional body tag
     snippetOptions: {
       whitelist: ['/wp-admin/admin-ajax.php'],
       rule: {
