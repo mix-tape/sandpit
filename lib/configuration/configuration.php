@@ -21,7 +21,8 @@ add_theme_support( 'html5', array('search-form', 'comment-form', 'comment-list',
 // Image sizes
 // --------------------------------------------------------------------------
 
-add_filter( 'jpeg_quality', create_function( '', 'return 100;' ) );
+add_filter( 'jpeg_quality', create_function( '', 'return 80;' ) );
+add_filter( 'wp_editor_set_quality', function($arg) { return 80; } );
 
 set_post_thumbnail_size( 150, 150, true );
 add_image_size( 'hero', 1920, 900, true );
