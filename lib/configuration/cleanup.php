@@ -29,6 +29,7 @@ function hibiki_head_cleanup() {
   remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0);
   remove_action('wp_head', 'rest_output_link_wp_head');
   remove_action('wp_head', 'wp_oembed_add_discovery_links');
+  remove_action('wp_head', 'rel_canonical');
 
 
   if (wp_count_posts()->publish > 0){
