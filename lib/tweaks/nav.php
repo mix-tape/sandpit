@@ -26,7 +26,7 @@ class Roots_Nav_Walker extends Walker_Nav_Menu {
 
     if ($item->is_dropdown && ($depth === 0)) {
       $item_html = str_replace('<a', '<a class="dropdown-toggle" data-toggle="dropdown" data-target="#"', $item_html);
-      $item_html = str_replace('</a>', ' <b class="caret"></b></a>', $item_html);
+      $item_html = str_replace('</a>', ' <i class="caret"></i></a>', $item_html);
     }
     elseif (stristr($item_html, 'li class="divider')) {
       $item_html = preg_replace('/<a[^>]*>.*?<\/a>/iU', '', $item_html);
@@ -62,6 +62,7 @@ function roots_nav_menu_css_class($classes, $item) {
   $classes = preg_replace('/(current(-menu-|[-_]page[-_])(item|parent|ancestor))/', 'active', $classes);
   $classes = preg_replace('/^((menu|page)[-_\w+]+)+/', '', $classes);
 
+  $classes[] = 'menu-item';
   $classes[] = 'menu-' . $slug;
 
   $classes = array_unique($classes);
