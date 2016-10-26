@@ -7,26 +7,26 @@
 
 $(window).load(function() {
 
-	// --------------------------------------------------------------------------
-	//   Matchheight options
-	// --------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
+  //   Matchheight options
+  // --------------------------------------------------------------------------
 
-	var options = {
-		byRow: true,
-		property: 'height',
-		target: null,
-		remove: false
-	}
+  var options = {
+    byRow: true,
+    property: 'height',
+    target: null,
+    remove: false
+  }
 
-	// --------------------------------------------------------------------------
-	//   Timeout to allow for animations to complete
-	// --------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
+  //   Timeout to allow for animations to complete
+  // --------------------------------------------------------------------------
 
-	setTimeout(function() {
-		// $('.example').matchHeight(options);
-	}, 100);
+  setTimeout(function() {
+    // $('.example').matchHeight(options);
+  }, 100);
 
-	$(document).trigger('redraw');
+  $(document).trigger('redraw');
 
 });
 
@@ -38,5 +38,5 @@ $(window).load(function() {
 $(document).on('redraw', triggerMatchHeight);
 
 function triggerMatchHeight() {
-	$.fn.matchHeight._update();
+  $.fn.matchHeight._update();
 }

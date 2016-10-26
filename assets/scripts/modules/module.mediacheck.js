@@ -10,32 +10,32 @@
 
 $(window).load(function() {
 
-	mediaCheck({
+  mediaCheck({
 
-		media: '(max-width: ' + mobileBreakPoint + ')',
+    media: '(max-width: ' + mobileBreakPoint + ')',
 
-		entry: function() {
-			mobile = true;
+    entry: function() {
+      mobile = true;
 
-			executeOnMobile.forEach(function(callback) {
-				callback();
-			});
-		},
+      executeOnMobile.forEach(function(callback) {
+        callback();
+      });
+    },
 
-		exit: function() {
-			mobile = false;
+    exit: function() {
+      mobile = false;
 
-			executeOnDesktop.forEach(function(callback) {
-				callback();
-			});
-		},
+      executeOnDesktop.forEach(function(callback) {
+        callback();
+      });
+    },
 
-		both: function() {
+    both: function() {
 
-			executeOnResize.forEach(function(callback) {
-				callback();
-			});
-		}
+      executeOnResize.forEach(function(callback) {
+        callback();
+      });
+    }
 
-	});
+  });
 });
