@@ -58,6 +58,22 @@ add_filter("mce_buttons_3", "enable_more_buttons_3");
 
 
 // --------------------------------------------------------------------------
+//  Remove H1 from formats to prevent multiple
+// --------------------------------------------------------------------------
+
+add_filter('tiny_mce_before_init', 'hibiki_mce_remove_unused_formats' );
+
+function hibiki_mce_remove_unused_formats($init) {
+
+  // Add block format elements to show in dropdown
+
+  $init['block_formats'] = 'Paragraph=p;Heading 2=h2;Heading 3=h3;Heading 4=h4;Heading 5=h5;Heading 6=h6;Pre=pre';
+
+  return $init;
+}
+
+
+// --------------------------------------------------------------------------
 //  Add new styles to the TinyMCE "formats" menu dropdown
 // --------------------------------------------------------------------------
 
@@ -93,6 +109,12 @@ function hibiki_mce_tyles_dropdown( $settings ) {
 
   // Merge old & new styles
   $settings['style_formats_merge'] = true;
+
+  // Add new styles
+  $settings['style_formats'] = json_encode( $new_styles );
+
+  // Return New Settings
+  return $settings;
 
 }
 
