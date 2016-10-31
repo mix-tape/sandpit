@@ -114,7 +114,7 @@ $mobile-up:           new-breakpoint(min-width $mobile 12);
 //   Base
 // --------------------------------------------------------------------------
 
-@import 'base/reset';
+@import '../../vendor/normalize-scss/normalize.scss';
 @import 'base/*';
 
 

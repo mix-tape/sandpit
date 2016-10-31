@@ -8,7 +8,8 @@
     "jquery-hoverIntent": "",
     "mediaCheck": "",
     "matchHeight": "",
-    "neat": "^1.8.0"
+    "neat": "^1.8.0",
+    "normalize-scss": "^3.0.3"
   },
   "resolutions": {
     "jquery": "1.12.2"
