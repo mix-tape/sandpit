@@ -7,34 +7,57 @@
 
 @media print {
 
-  * { background: transparent !important; color: #444 !important; text-shadow: none; }
+  * {
+    background: transparent !important;
+    color: $charcoal !important;
+    text-shadow: none !important;
+    height: auto !important;
+    width: auto !important;
+    float: none !important;
+  }
 
-  nav,
-  #main-nav,
-  #searchform,
-  #contact-details,
-  #sidebar {
+  nav {
     display: none !important;
   }
 
-  #content { width: 100%; }
+  a,
+  a:visited {
+    color: $charcoal !important;
+    text-decoration: underline;
+  }
 
-  a, a:visited { color: #444 !important; text-decoration: underline; }
+  a::after {
+    content: ' (' attr(href) ')';
+  }
 
-  a:after { content: " (" attr(href) ")"; }
+  abbr::after {
+    content: ' (' attr(title) ')';
+  }
 
-  abbr:after { content: " (" attr(title) ")"; }
+  pre,
+  blockquote {
+    border: 1px solid $gray;
+    page-break-inside: avoid;
+  }
 
-  .ir a:after { content: ""; }  /* Don't show links for images */
+  img {
+    page-break-inside: avoid;
+  }
 
-  pre, blockquote { border: 1px solid #999; page-break-inside: avoid; }
+  @page {
+    margin: 0.2cm;
+  }
 
-  img { page-break-inside: avoid; }
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
 
-  @page { margin: 0.5cm; }
-
-  p, h2, h3 { orphans: 3; widows: 3; }
-
-  h2, h3{ page-break-after: avoid; }
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
 
 }

@@ -16,7 +16,7 @@
   user-select: none;
   -webkit-user-drag: none;
 
-  color: white;
+  color: $white;
   white-space: nowrap;
   vertical-align: baseline;
   text-decoration: none;
@@ -25,15 +25,17 @@
 
   &:hover {
     outline: 0;
-    background: $colour1 - #111;
-    border-color: $colour1 - #111;
+    background: lighten($colour1, 20%);
+    border-color: lighten($colour1, 20%);
   }
 
-  &:active, &.active {
+  &:active,
+  &.active {
     outline: 0;
   }
 
-  &.disabled, &[disabled] {
+  &.disabled,
+  &[disabled] {
     background-image: none;
     opacity: 0.4;
     cursor: not-allowed;

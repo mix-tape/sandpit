@@ -10,19 +10,19 @@ img,
 .size-large,
 .size-medium,
 .size-thumbnail {
-  max-width: 100%;
   height: auto;
+  max-width: 100%;
 }
 
 .alignleft {
-  float: left;
   clear: left;
+  float: left;
   margin-right: $gap;
 }
 
 .alignright {
-  float: right;
   clear: right;
+  float: right;
   margin-left: $gap;
 }
 

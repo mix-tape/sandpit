@@ -16,6 +16,7 @@ $white:               #ffffff;
 
 $blue:                #74a9cf;
 $green:               #9c9c48;
+$yellow:              #ffd700;
 $red:                 #d78f8e;
 
 
@@ -25,7 +26,7 @@ $base-body-color:     $charcoal;
 $base-heading-color:  $black;
 
 $base-link-color:     $blue;
-$base-link-hover:     $base-link-color + #222;
+$base-link-hover:     lighten($base-link-color, 20%);
 
 $base-border-color:   $gray;
 $base-border-radius:  2px;

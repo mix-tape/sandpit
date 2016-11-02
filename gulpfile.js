@@ -95,6 +95,20 @@ gulp.task('browser-sync', function() {
 
 
 // --------------------------------------------------------------------------
+//   Lint SCSS
+// --------------------------------------------------------------------------
+
+// Depends on gem install scss_lint scss_lint_reporter_checkstyle
+
+gulp.task('lint-styles', function () {
+  return gulp.src( [ config.styles + '/**/*.scss', '!' + config.styles + '/**/_print.scss' ] )
+    .pipe( plugins.scssLint({
+      config: '.scss-lint-config.yml',
+      reporterOutputFormat: 'Checkstyle',
+    }))
+})
+
+// --------------------------------------------------------------------------
 //   Compile SCSS into CSS stylesheet
 // --------------------------------------------------------------------------
 
