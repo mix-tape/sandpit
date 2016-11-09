@@ -12,7 +12,6 @@ var gulp = require('gulp'),
     mainBowerFiles = require('main-bower-files'),
     browserSync = require('browser-sync'),
     reload = browserSync.reload,
-    merge = require('merge-stream'),
     del = require('del'),
     path = require('path'),
     fs = require("fs")
@@ -32,15 +31,6 @@ var config = {
   icons: './assets/icons',
   vendor: bowerrc.directory
 }
-
-
-// --------------------------------------------------------------------------
-//   Remove all existing compiled files
-// --------------------------------------------------------------------------
-
-gulp.task('clean', function () {
-  return del([])
-})
 
 
 // --------------------------------------------------------------------------

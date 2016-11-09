@@ -10,29 +10,22 @@
   },
   "devDependencies": {
     "browser-sync": "*",
-    "del": "*",
     "gulp": "*",
     "gulp-autoprefixer": "*",
-    "gulp-changed": "*",
     "gulp-concat": "*",
     "gulp-consolidate": "*",
     "gulp-css-globbing": "*",
     "gulp-cssnano": "*",
-    "gulp-debug": "^2.1.2",
     "gulp-group-css-media-queries": "*",
     "gulp-iconfont": "*",
-    "gulp-ignore": "*",
     "gulp-load-plugins": "*",
     "gulp-order": "*",
     "gulp-plumber": "*",
     "gulp-rename": "*",
     "gulp-sass": "*",
     "gulp-scss-lint": "^0.4.0",
-    "gulp-sourcemaps": "*",
     "gulp-uglify": "*",
-    "gulp-wait": "*",
     "lodash": "*",
-    "main-bower-files": "*",
-    "merge-stream": "^1.0.0"
+    "main-bower-files": "*"
   }
 }
