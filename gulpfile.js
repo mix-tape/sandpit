@@ -12,7 +12,6 @@ var gulp = require('gulp'),
     mainBowerFiles = require('main-bower-files'),
     browserSync = require('browser-sync'),
     reload = browserSync.reload,
-    del = require('del'),
     path = require('path'),
     fs = require("fs")
 
@@ -24,7 +23,7 @@ var gulp = require('gulp'),
 var bowerrc = JSON.parse(fs.readFileSync('.bowerrc', 'utf8'))
 
 var config = {
-  url: 'hibiki.dev',
+  url: 'hipflask.dev',
   styles: './assets/styles',
   scripts: './assets/scripts',
   images: './assets/images',
@@ -273,11 +272,11 @@ gulp.task('watch-build', function () {
 //   Run development level tasks, and watch for changes
 // --------------------------------------------------------------------------
 
-gulp.task('default', [ 'clean', 'styles', 'scripts', 'browser-sync', 'watch'])
+gulp.task('default', [ 'styles', 'scripts', 'browser-sync', 'watch'])
 
 
 // --------------------------------------------------------------------------
 //   Run production tasks including minfication, and without watch
 // --------------------------------------------------------------------------
 
-gulp.task('build', ['clean', 'ugly-styles', 'ugly-scripts'])
+gulp.task('build', [ 'ugly-styles', 'ugly-scripts' ])
