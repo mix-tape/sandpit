@@ -36,7 +36,7 @@ var config = {
 //   Browser Sync
 // --------------------------------------------------------------------------
 
-gulp.task('browser-sync', function() {
+gulp.task('browser-sync', () => {
 
   // Watch these files and trigger reload
 
@@ -65,7 +65,7 @@ gulp.task('browser-sync', function() {
     injectChanges: true,
 
     // Fix cross origin resource issues
-    middleware: function (req, res, next) {
+    middleware: (req, res, next) => {
       res.setHeader('Access-Control-Allow-Origin', '*')
       next()
     },
@@ -75,7 +75,7 @@ gulp.task('browser-sync', function() {
       whitelist: ['/wp-admin/admin-ajax.php'],
       rule: {
         match: /<\/body>/i,
-        fn: function (snippet, match) { return snippet + match }
+        fn: (snippet, match) => { return snippet + match }
       }
     }
 
@@ -89,7 +89,8 @@ gulp.task('browser-sync', function() {
 
 // Depends on gem install scss_lint scss_lint_reporter_checkstyle
 
-gulp.task('lint-styles', function () {
+gulp.task('lint-styles', () => {
+
   return gulp.src( [ config.styles + '/**/*.scss', '!' + config.styles + '/**/_print.scss' ] )
     .pipe( plugins.scssLint({
       config: '.scss-lint-config.yml',
@@ -97,11 +98,13 @@ gulp.task('lint-styles', function () {
     }))
 })
 
+
 // --------------------------------------------------------------------------
 //   Compile SCSS into CSS stylesheet
 // --------------------------------------------------------------------------
 
-gulp.task('styles', function () {
+gulp.task('styles', () => {
+
   return gulp.src( config.styles + '/main.scss' )
     .pipe( plugins.plumber() )
     .pipe( plugins.cssGlobbing({
@@ -124,27 +127,14 @@ gulp.task('styles', function () {
 
 
 // --------------------------------------------------------------------------
-//   Compile SCSS and minify into CSS stylesheet
+//   Minify CSS stylesheet
 // --------------------------------------------------------------------------
 
-gulp.task('ugly-styles', function () {
-  return gulp.src( config.styles + '/main.scss' )
+gulp.task('compress-styles', ['styles'], () => {
+
+  return gulp.src( config.styles + '/styles.css' )
     .pipe( plugins.plumber() )
-    .pipe( plugins.cssGlobbing({
-      extensions: ['.css', '.scss']
-    }))
-    .pipe( plugins.sass({
-      style: 'compressed',
-      quiet: true,
-      sourcemap: true,
-      sourcemapPath: '.',
-      includePaths: [ config.vendor ]
-    })
-    .on( 'error', plugins.sass.logError) )
-    .pipe( plugins.groupCssMediaQueries() )
-    .pipe( plugins.autoprefixer("last 3 version", "> 1%", "ie 8", "ie 7") )
     .pipe( plugins.cssnano() )
-    .pipe( plugins.rename('styles.css') )
     .pipe( gulp.dest(config.styles) )
 })
 
@@ -153,7 +143,7 @@ gulp.task('ugly-styles', function () {
 //   Concat all user script files required into `global.js`
 // --------------------------------------------------------------------------
 
-gulp.task('scripts', function () {
+gulp.task('scripts', () => {
 
   var scripts = mainBowerFiles( { filter: /.*\.js$/i } )
 
@@ -161,31 +151,30 @@ gulp.task('scripts', function () {
 
   return gulp.src( scripts )
     .pipe( plugins.plumber() )
+    .pipe( plugins.sourcemaps.init() )
+    .pipe( plugins.babel({
+      presets: ['latest']
+    }))
     .pipe( plugins.order( ['*jquery.js*', '*angular.js*', 'module.init.js'] ) )
     .pipe( plugins.concat('global.js') )
+    .pipe( plugins.sourcemaps.write( '.' ) )
     .pipe( gulp.dest( config.scripts ) )
 })
 
 
 // --------------------------------------------------------------------------
-//   Concat all user script files required into `global.js`
+//   Minify `global.js`
 // --------------------------------------------------------------------------
 
-gulp.task('ugly-scripts', function () {
+gulp.task('compress-scripts', ['scripts'], () => {
 
-  var scripts = mainBowerFiles( { filter: /.*\.js$/i } )
-
-  scripts.push( config.scripts + '/utilities/*.js', config.scripts + '/modules/*.js' )
-
-  return gulp.src( scripts )
+  return gulp.src( config.scripts + '/global.js' )
     .pipe( plugins.plumber() )
-    .pipe( plugins.order( ['*jquery.js*', '*angular.js*', 'module.init.js'] ) )
     .pipe( plugins.uglify({
       mangle: true,
       compress: true,
       preserveComments: false
     }))
-    .pipe( plugins.concat('global.js') )
     .pipe( gulp.dest( config.scripts ) )
 })
 
@@ -194,7 +183,8 @@ gulp.task('ugly-scripts', function () {
 //   Optimise all images
 // --------------------------------------------------------------------------
 
-gulp.task('images', function () {
+gulp.task('images', () => {
+
   return gulp.src([
       config.images + "/*",
       config.images + "/**/*"] )
@@ -211,16 +201,16 @@ gulp.task('images', function () {
 //   Compile Fonts
 // --------------------------------------------------------------------------
 
-gulp.task('icons', function () {
+gulp.task('icons', () => {
 
-  gulp.src( [ config.icons + '/svg/*.svg'])
+  gulp.src( [ config.icons + '/svg/*.svg'] )
     .pipe( plugins.iconfont({
       fontName: 'icons',
       fontHeight: 150,
       normalize: true,
       descent: 0
     }))
-    .on('glyphs', function(glyphs, options) {
+    .on('glyphs', (glyphs, options) => {
 
       var options = {
             glyphs: glyphs,
@@ -252,18 +242,27 @@ gulp.task('icons', function () {
 //   Watch
 // --------------------------------------------------------------------------
 
-gulp.task('watch', function () {
+gulp.task('watch', () => {
 
-  gulp.watch( config.styles + '/**/*.scss', ['styles'] )
-  gulp.watch( ['./bower.json', config.scripts + '/**/*.js', '!' + config.scripts + '/global.js'], ['scripts'] )
+  plugins.watch( config.styles + '/**/*.scss', () => {
+    gulp.start('styles')
+  })
+
+  plugins.watch( ['./bower.json', config.scripts + '/**/*.js', '!' + config.scripts + '/global.js'], () => {
+    gulp.start('scripts')
+  })
 
 })
 
 
-gulp.task('watch-build', function () {
+gulp.task('watch-build', () => {
 
-  gulp.watch( config.styles + '/**/*.scss', ['ugly-styles'] )
-  gulp.watch( ['./bower.json', config.scripts + '/**/*.js'], ['ugly-scripts'] )
+  plugins.watch( config.styles + '/**/*.scss', () => {
+    gulp.start('compress-styles')
+  })
+  plugins.watch( ['./bower.json', config.scripts + '/**/*.js'], () => {
+    gulp.start('compress-scripts')
+  })
 
 })
 
@@ -279,4 +278,4 @@ gulp.task('default', [ 'styles', 'scripts', 'browser-sync', 'watch'])
 //   Run production tasks including minfication, and without watch
 // --------------------------------------------------------------------------
 
-gulp.task('build', [ 'ugly-styles', 'ugly-scripts' ])
+gulp.task('build', [ 'compress-styles', 'compress-scripts' ])
