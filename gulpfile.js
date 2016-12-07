@@ -21,9 +21,10 @@ var gulp = require('gulp'),
 // --------------------------------------------------------------------------
 
 var bowerrc = JSON.parse(fs.readFileSync('.bowerrc', 'utf8'))
+var secrets = JSON.parse(fs.readFileSync('../../../secrets.json', 'utf8'))
 
 var config = {
-  url: 'hipflask.dev',
+  url: secrets.development.url,
   styles: './assets/styles',
   scripts: './assets/scripts',
   images: './assets/images',
@@ -92,10 +93,11 @@ gulp.task('browser-sync', () => {
 gulp.task('lint-styles', () => {
 
   return gulp.src( [ config.styles + '/**/*.scss', '!' + config.styles + '/**/_print.scss' ] )
-    .pipe( plugins.scssLint({
-      config: '.scss-lint-config.yml',
-      reporterOutputFormat: 'Checkstyle',
+    .pipe( plugins.sassLint({
+      configFile: '.scss-lint-config.yml',
     }))
+    .pipe( plugins.sassLint.format() )
+    // .pipe( plugins.sassLint.failOnError() )
 })
 
 
@@ -121,7 +123,7 @@ gulp.task('styles', () => {
     .pipe( plugins.groupCssMediaQueries() )
     .pipe( plugins.autoprefixer("last 3 version", "> 1%", "ie 8", "ie 7") )
     .pipe( plugins.rename('styles.css') )
-    .pipe( gulp.dest(config.styles) )
+    .pipe( gulp.dest( config.styles ) )
     .pipe( reload({stream:true}) )
 })
 
@@ -135,7 +137,8 @@ gulp.task('compress-styles', ['styles'], () => {
   return gulp.src( config.styles + '/styles.css' )
     .pipe( plugins.plumber() )
     .pipe( plugins.cssnano() )
-    .pipe( gulp.dest(config.styles) )
+    .pipe( gulp.dest( config.styles ) )
+    .pipe( plugins.parker() )
 })
 
 
@@ -155,7 +158,7 @@ gulp.task('scripts', () => {
     .pipe( plugins.babel({
       presets: ['latest']
     }))
-    .pipe( plugins.order( ['*jquery.js*', '*angular.js*', 'module.init.js'] ) )
+    .pipe( plugins.order( ['*jquery.js*', '*angular.js*', 'init.js'] ) )
     .pipe( plugins.concat('global.js') )
     .pipe( plugins.sourcemaps.write( '.' ) )
     .pipe( gulp.dest( config.scripts ) )
@@ -242,26 +245,18 @@ gulp.task('icons', () => {
 //   Watch
 // --------------------------------------------------------------------------
 
-gulp.task('watch', () => {
+gulp.task('watch-styles', () => {
 
-  plugins.watch( config.styles + '/**/*.scss', () => {
+  return plugins.watch( config.styles + '/**/*.scss', () => {
     gulp.start('styles')
-  })
-
-  plugins.watch( ['./bower.json', config.scripts + '/**/*.js', '!' + config.scripts + '/global.js'], () => {
-    gulp.start('scripts')
   })
 
 })
 
+gulp.task('watch-scripts', () => {
 
-gulp.task('watch-build', () => {
-
-  plugins.watch( config.styles + '/**/*.scss', () => {
-    gulp.start('compress-styles')
-  })
-  plugins.watch( ['./bower.json', config.scripts + '/**/*.js'], () => {
-    gulp.start('compress-scripts')
+  return plugins.watch( ['./bower.json', config.scripts + '/**/*.js', '!' + config.scripts + '/global.js'], () => {
+    gulp.start('scripts')
   })
 
 })
@@ -271,7 +266,7 @@ gulp.task('watch-build', () => {
 //   Run development level tasks, and watch for changes
 // --------------------------------------------------------------------------
 
-gulp.task('default', [ 'styles', 'scripts', 'browser-sync', 'watch'])
+gulp.task('default', [ 'styles', 'scripts', 'browser-sync', 'watch-styles', 'watch-scripts' ])
 
 
 // --------------------------------------------------------------------------

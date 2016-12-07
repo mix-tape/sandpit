@@ -26,7 +26,7 @@
     "gulp-plumber": "*",
     "gulp-rename": "*",
     "gulp-sass": "*",
-    "gulp-scss-lint": "^0.4.0",
+    "gulp-sass-lint": "^1.3.2",
     "gulp-sourcemaps": "^2.2.0",
     "gulp-uglify": "*",
     "gulp-watch": "^4.3.11",
