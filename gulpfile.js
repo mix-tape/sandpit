@@ -88,8 +88,6 @@ gulp.task('browser-sync', () => {
 //   Lint SCSS
 // --------------------------------------------------------------------------
 
-// Depends on gem install scss_lint scss_lint_reporter_checkstyle
-
 gulp.task('lint-styles', () => {
 
   return gulp.src( [ config.styles + '/**/*.scss', '!' + config.styles + '/**/_print.scss' ] )
@@ -97,7 +95,6 @@ gulp.task('lint-styles', () => {
       configFile: '.scss-lint-config.yml',
     }))
     .pipe( plugins.sassLint.format() )
-    // .pipe( plugins.sassLint.failOnError() )
 })
 
 
