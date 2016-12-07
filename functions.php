@@ -10,7 +10,7 @@
 //   Include Utilities
 // --------------------------------------------------------------------------
 
-foreach (glob(dirname(__FILE__) . "/lib/utilities/*.php") as $filename)
+foreach (glob(dirname(__FILE__) . "/library/utilities/*.php") as $filename)
 {
   include $filename;
 }
@@ -20,17 +20,17 @@ foreach (glob(dirname(__FILE__) . "/lib/utilities/*.php") as $filename)
 //   Include Configuration
 // --------------------------------------------------------------------------
 
-include_once('lib/configuration/cleanup.php');              // Cleanup the markup
-include_once('lib/configuration/configuration.php');        // Base configuration and constants
-include_once('lib/configuration/activation.php');           // Theme setup
-include_once('lib/configuration/assets-enqueue.php');       // Dependency management
+include_once('library/configuration/cleanup.php');              // Cleanup the markup
+include_once('library/configuration/configuration.php');        // Base configuration and constants
+include_once('library/configuration/activation.php');           // Theme setup
+include_once('library/configuration/assets-enqueue.php');       // Dependency management
 
 
 // --------------------------------------------------------------------------
-//   Include Models
+//   Include Post Types and Taxonomies
 // --------------------------------------------------------------------------
 
-foreach (glob(dirname(__FILE__) . "/lib/models/*.php") as $filename)
+foreach (glob(dirname(__FILE__) . "/library/content-types/*.php") as $filename)
 {
   include $filename;
 }
@@ -40,7 +40,7 @@ foreach (glob(dirname(__FILE__) . "/lib/models/*.php") as $filename)
 //   Include Tweaks
 // --------------------------------------------------------------------------
 
-foreach (glob(dirname(__FILE__) . "/lib/tweaks/*.php") as $filename)
+foreach (glob(dirname(__FILE__) . "/library/tweaks/*.php") as $filename)
 {
   include $filename;
 }

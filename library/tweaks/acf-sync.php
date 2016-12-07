@@ -15,9 +15,8 @@ add_filter('acf/settings/save_json', 'hibiki_acf_json_save_point');
 function hibiki_acf_json_save_point( $path )
 {
   // update path
-  $path = get_stylesheet_directory() . '/lib/fields';
+  $path = get_stylesheet_directory() . '/library/fields';
 
-  // return
   return $path;
 }
 
@@ -34,8 +33,7 @@ function hibiki_acf_json_load_point( $paths )
   unset($paths[0]);
 
   // append path
-  $paths[] = get_stylesheet_directory() . '/lib/fields';
+  $paths[] = get_stylesheet_directory() . '/library/fields';
 
-  // return
   return $paths;
 }

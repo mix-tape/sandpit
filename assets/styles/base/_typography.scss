@@ -18,7 +18,7 @@ body {
   color: $base-body-color;
 
   text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
 
   @include media($mobile-down) {
     font-size: 14px;
@@ -57,7 +57,7 @@ h2 { font-size: 32px; }
 h3 { font-size: 24px; }
 h4 { font-size: 16px; }
 h5 { font-size: 16px; }
-h6 { font-size: 14px; text-transform: uppercase; }
+h6 { font-size: 14px; }
 
 @include media($mobile-down) {
 
@@ -78,11 +78,11 @@ h6 { font-size: 14px; text-transform: uppercase; }
 a {
   color: $base-link-color;
   text-decoration: none;
-}
 
-a:hover,
-a:focus {
-  color: $base-link-hover;
+  &:hover,
+  &:focus {
+    color: $base-link-hover;
+  }
 }
 
 p {
@@ -118,8 +118,11 @@ blockquote {
   padding: $gap;
   font-style: italic;
 
-  p:last-child {
-    margin-bottom: 0;
+  p {
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }
 

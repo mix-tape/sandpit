@@ -36,16 +36,30 @@ form {
 
 // ----- Buttons ----- //
 
-.button,
-input[type="button"],
-input[type="submit"],
-input[type="reset"] {
+button,
+[type='button'],
+[type='submit'],
+[type='reset'] {
   @include button;
 }
 
 // ----- Input types ----- //
 
-#{$all-text-inputs},
+input[type="color"]
+input[type="date"]
+input[type="datetime"]
+input[type="datetime-local"]
+input[type="email"]
+input[type="month"]
+input[type="number"]
+input[type="password"]
+input[type="search"]
+input[type="tel"]
+input[type="text"]
+input[type="time"]
+input[type="url"]
+input[type="week"]
+input:not([type])
 textarea,
 select {
   max-width: 100%;
@@ -53,29 +67,17 @@ select {
   border: $form-element-border;
   padding: 5px 10px;
   font-weight: normal;
+
+  &:hover {
+    background: $white;
+  }
+
+  &:focus {
+    background: $white;
+  }
 }
 
-#{$all-text-inputs-hover},
-textarea,
-select {
-  background: $white;
-}
-
-#{$all-text-inputs-focus},
-textarea,
-select {
-  background: $white;
-}
-
-textarea.medium {
-  height: 100px;
-}
-
-textarea.large {
-  height: 150px;
-}
-
-input[type="checkbox"],
-input[type="radio"] {
+[type='checkbox'],
+[type='radio'] {
   margin-right: 10px;
 }

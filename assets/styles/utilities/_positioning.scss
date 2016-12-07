@@ -4,6 +4,8 @@
 //
 // --------------------------------------------------------------------------
 
+// sass-lint:disable property-sort-order
+
 @mixin vertical-align($position: relative) {
   position: $position;
   top: 50%;

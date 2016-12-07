@@ -4,19 +4,19 @@
 //
 // --------------------------------------------------------------------------
 
-@mixin button ($colour1: $base-link-color) {
+@mixin button ($primary: $base-link-color, $content: $white) {
   display: inline-block;
   padding: 0.5em 1em;
-  background-color: $colour1;
-  border: 1px solid $colour1;
+  background-color: $primary;
+  border: 1px solid $primary;
   border-radius: $base-border-radius;
   outline: 0;
   zoom: 1;
   cursor: pointer;
   user-select: none;
-  -webkit-user-drag: none;
+  user-drag: none;
 
-  color: $white;
+  color: $content;
   white-space: nowrap;
   vertical-align: baseline;
   text-decoration: none;
@@ -25,8 +25,8 @@
 
   &:hover {
     outline: 0;
-    background: lighten($colour1, 20%);
-    border-color: lighten($colour1, 20%);
+    background: lighten($primary, 20%);
+    border-color: lighten($primary, 20%);
   }
 
   &:active,
