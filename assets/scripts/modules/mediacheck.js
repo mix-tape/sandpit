@@ -8,31 +8,31 @@
 //   Add functions to breakpoints with breakPointArray.push()
 // --------------------------------------------------------------------------
 
-$(window).load(function() {
+$(window).load( () => {
 
   mediaCheck({
 
     media: '(max-width: ' + mobileBreakPoint + ')',
 
-    entry: function() {
+    entry: () => {
       mobile = true;
 
-      executeOnMobile.forEach(function(callback) {
+      executeOnMobile.forEach( (callback) => {
         callback();
       });
     },
 
-    exit: function() {
+    exit: () => {
       mobile = false;
 
-      executeOnDesktop.forEach(function(callback) {
+      executeOnDesktop.forEach( (callback) => {
         callback();
       });
     },
 
-    both: function() {
+    both: () => {
 
-      executeOnResize.forEach(function(callback) {
+      executeOnResize.forEach( (callback) => {
         callback();
       });
     }

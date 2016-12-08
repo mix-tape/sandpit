@@ -4,16 +4,16 @@
 
 // Usage:
 
-// $(window).resize(function () {
-//   waitForFinalEvent(function(){
+// $(window).resize( () => {
+//   waitForFinalEvent( () => {
 //     alert('Resize...');
 //     //...
 //   }, 500, "some unique string");
 // });
 
-var waitForFinalEvent = (function () {
+var waitForFinalEvent = ( () => {
   var timers = {};
-  return function (callback, ms, uniqueId) {
+  return (callback, ms, uniqueId) => {
     if (!uniqueId) {
       uniqueId = "Don't call this twice without a uniqueId";
     }
