@@ -109,19 +109,20 @@ gulp.task('styles', () => {
     .pipe( plugins.cssGlobbing({
       extensions: ['.css', '.scss']
     }))
+    .pipe( plugins.sourcemaps.init() )
     .pipe( plugins.sass({
       style: 'expanded',
       quiet: true,
-      sourcemap: true,
-      sourcemapPath: './',
       includePaths: [ config.vendor ]
     })
     .on( 'error', plugins.sass.logError) )
+    .pipe( plugins.sourcemaps.init({ loadMaps: true }) )
     .pipe( plugins.groupCssMediaQueries() )
     .pipe( plugins.autoprefixer("last 3 version", "> 1%", "ie 8", "ie 7") )
     .pipe( plugins.rename('styles.css') )
+    .pipe( plugins.sourcemaps.write('./') )
     .pipe( gulp.dest( config.styles ) )
-    .pipe( reload({stream:true}) )
+    .pipe( browserSync.reload({stream:true}) )
 })
 
 
