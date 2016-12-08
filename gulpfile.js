@@ -162,6 +162,10 @@ gulp.task('scripts', () => {
     .pipe( gulp.dest( config.scripts ) )
 })
 
+gulp.task('scripts-reload', ['scripts'], () => {
+  browserSync.reload()
+})
+
 
 // --------------------------------------------------------------------------
 //   Minify `global.js`
@@ -254,7 +258,7 @@ gulp.task('watch-styles', () => {
 gulp.task('watch-scripts', () => {
 
   return plugins.watch( ['./bower.json', config.scripts + '/**/*.js', '!' + config.scripts + '/global.js'], () => {
-    gulp.start('scripts')
+    gulp.start('scripts-reload')
   })
 
 })
