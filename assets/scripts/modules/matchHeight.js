@@ -5,7 +5,7 @@
 //
 // --------------------------------------------------------------------------
 
-$(window).load( () => {
+$(window).load(function() {
 
   // --------------------------------------------------------------------------
   //   Matchheight options
@@ -22,7 +22,7 @@ $(window).load( () => {
   //   Timeout to allow for animations to complete
   // --------------------------------------------------------------------------
 
-  setTimeout( () => {
+  setTimeout(function() {
     // $('.example').matchHeight(options);
   }, 100);
 
@@ -37,6 +37,6 @@ $(window).load( () => {
 
 $(document).on('redraw', triggerMatchHeight);
 
-var triggerMatchHeight = () => {
+function triggerMatchHeight() {
   $.fn.matchHeight._update();
 }

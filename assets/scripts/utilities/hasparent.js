@@ -2,7 +2,7 @@
 //   Check if node has a parent of specified class
 // --------------------------------------------------------------------------
 
-var hasParent = (el, id) => {
+var hasParent = function(el, id) {
   if (el) {
     do {
       if (el.id === id) {
