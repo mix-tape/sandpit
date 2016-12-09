@@ -139,6 +139,18 @@ gulp.task('compress-styles', ['styles'], () => {
     .pipe( plugins.parker() )
 })
 
+// --------------------------------------------------------------------------
+//   Lint JS
+// --------------------------------------------------------------------------
+
+gulp.task('lint-scripts', function() {
+
+  return gulp.src([config.scripts + '/**/*.js', '!' + config.scripts + 'global.js'])
+    .pipe(plugins.eslint('.eslintrc.yml'))
+    .pipe(plugins.eslint.format())
+    .pipe(plugins.eslint.failAfterError())
+    .on("error", plugins.notify.onError('ESLint Error!'));
+});
 
 // --------------------------------------------------------------------------
 //   Concat all user script files required into `global.js`
