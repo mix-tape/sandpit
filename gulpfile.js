@@ -148,7 +148,7 @@ gulp.task('compress-styles', ['styles'], () => {
 
 gulp.task('lint-scripts', function() {
 
-  return gulp.src([config.scripts + '/**/*.js', '!' + config.scripts + 'global.js'])
+  return gulp.src([config.scripts + '/**/*.js', '!' + config.scripts + '/global.js'])
     .pipe(plugins.eslint('.eslintrc.yml'))
     .pipe(plugins.eslint.format())
     .pipe(plugins.eslint.failAfterError())
