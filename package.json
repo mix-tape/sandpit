@@ -7,6 +7,7 @@
     "jquery": "^3.1.1",
     "jquery-match-height": "^0.7.0",
     "jquery.easing": "^1.4.1",
+    "mediaCheck": "^0.4.6",
     "node-neat": "^1.7.2",
     "node-normalize-scss": "^1.4.0"
   },
@@ -18,6 +19,7 @@
     "babel-preset-latest": "^6.16.0",
     "browser-sync": "*",
     "browserify": "^13.1.1",
+    "browserify-shim": "^3.8.12",
     "gulp": "*",
     "gulp-autoprefixer": "*",
     "gulp-babel": "^6.1.2",
@@ -42,5 +44,16 @@
     "gulp-watch": "^4.3.11",
     "lodash": "*",
     "vinyl-source-stream": "^1.1.0"
+  },
+  "browser": {
+    "mediaCheck": "./node_modules/mediaCheck/js/mediaCheck.js"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "./node_modules/mediaCheck/js/mediaCheck.js": "mediaCheck"
   }
 }

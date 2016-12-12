@@ -9,4 +9,5 @@
 // --------------------------------------------------------------------------
 
 require('../modules/matchHeight')
+require('../modules/breakpoints')
 require('../modules/exampleModule')
