@@ -7,11 +7,10 @@
 
 var $ = require('jquery'),
     config = require('../base/config')
-
-require('jquery.easing')($);
+    require('jquery.easing')
 
 $(window).on('load' ,function() {
 
-  // Do something on load
+  // $('.page-content').slideUp(1000, 'easeInOutExpo')
 
 })
