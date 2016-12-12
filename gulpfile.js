@@ -9,18 +9,20 @@
 
 var gulp = require('gulp'),
     plugins = require('gulp-load-plugins')(),
-    mainBowerFiles = require('main-bower-files'),
     browserSync = require('browser-sync'),
     reload = browserSync.reload,
+    browserify = require('browserify'),
+    source = require('vinyl-source-stream'),
+    gutil = require('gulp-util'),
     path = require('path'),
-    fs = require("fs")
+    fs = require("fs"),
+    _ = require('lodash')
 
 
 // --------------------------------------------------------------------------
 //   Configuration
 // --------------------------------------------------------------------------
 
-var bowerrc = JSON.parse(fs.readFileSync('.bowerrc', 'utf8'))
 var secrets = JSON.parse(fs.readFileSync('../../../secrets.json', 'utf8'))
 
 var config = {
@@ -29,7 +31,6 @@ var config = {
   scripts: './assets/scripts',
   images: './assets/images',
   icons: './assets/icons',
-  vendor: bowerrc.directory
 }
 
 
@@ -106,6 +107,10 @@ gulp.task('lint-styles', () => {
 
 gulp.task('styles', () => {
 
+  var vendorPaths = []
+
+  vendorPaths = _.concat( vendorPaths, require('node-neat').includePaths, require('node-normalize-scss').includePaths )
+
   return gulp.src( config.styles + '/main.scss' )
     .pipe( plugins.plumber() )
     .pipe( plugins.cssGlobbing({
@@ -115,7 +120,7 @@ gulp.task('styles', () => {
     .pipe( plugins.sass({
       style: 'expanded',
       quiet: true,
-      includePaths: [ config.vendor ]
+      includePaths: vendorPaths
     })
     .on( 'error', plugins.sass.logError)
     .on( 'error', plugins.notify.onError('SCSS Error!') ) )
@@ -142,6 +147,7 @@ gulp.task('compress-styles', ['styles'], () => {
     .pipe( plugins.parker() )
 })
 
+
 // --------------------------------------------------------------------------
 //   Lint JS
 // --------------------------------------------------------------------------
@@ -155,26 +161,22 @@ gulp.task('lint-scripts', function() {
     .on("error", plugins.notify.onError('ESLint Error!'))
 })
 
+
 // --------------------------------------------------------------------------
 //   Concat all user script files required into `global.js`
 // --------------------------------------------------------------------------
 
-gulp.task('scripts', () => {
+gulp.task('scripts', (done) => {
 
-  var scripts = mainBowerFiles( { filter: /.*\.js$/i } )
-
-  scripts.push( config.scripts + '/utilities/*.js', config.scripts + '/modules/*.js' )
-
-  return gulp.src( scripts )
-    .pipe( plugins.plumber() )
-    .pipe( plugins.sourcemaps.init() )
-    .pipe( plugins.babel({
-      presets: ['latest']
-    }))
-    .pipe( plugins.order( ['*jquery.js*', '*angular.js*', 'init.js'] ) )
-    .pipe( plugins.concat('global.js') )
-    .pipe( plugins.sourcemaps.write( '.' ) )
+  return browserify({
+      entries: path.join( config.scripts, 'base/main.js'),
+      debug: true
+    })
+    .bundle()
+    .on('error', gutil.log)
+    .pipe( source('global.js') )
     .pipe( gulp.dest( config.scripts ) )
+
 })
 
 gulp.task('scripts-reload', ['scripts'], () => {
@@ -272,7 +274,7 @@ gulp.task('watch-styles', () => {
 
 gulp.task('watch-scripts', () => {
 
-  return plugins.watch( ['./bower.json', config.scripts + '/**/*.js', '!' + config.scripts + '/global.js'], () => {
+  return plugins.watch( ['./package.json', config.scripts + '/**/*.js', '!' + config.scripts + '/global.js'], () => {
     gulp.start('scripts-reload')
   })
 

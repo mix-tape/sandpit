@@ -1,18 +1,22 @@
 // --------------------------------------------------------------------------
-//   Check if node has a parent of specified class
+//
+//   hasparent
+//     Check if node has a parent of specified class
+//
 // --------------------------------------------------------------------------
 
-var hasParent = function(el, id) {
+module.exports = function(el, id) {
+
   if (el) {
     do {
       if (el.id === id) {
-        return true;
+        return true
       }
       if (el.nodeType === 9) {
-        break;
+        break
       }
     }
-    while((el = el.parentNode));
+    while((el = el.parentNode))
   }
-  return false;
-};
+  return false
+}

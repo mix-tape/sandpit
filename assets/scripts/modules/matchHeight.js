@@ -5,7 +5,12 @@
 //
 // --------------------------------------------------------------------------
 
-$(window).load(function() {
+var $ = require('jquery'),
+    matchHeight = require('jquery-match-height')
+    config = require('../base/config')
+
+
+$(window).on('load' ,function() {
 
   // --------------------------------------------------------------------------
   //   Matchheight options
@@ -24,19 +29,18 @@ $(window).load(function() {
 
   setTimeout(function() {
     // $('.example').matchHeight(options);
-  }, 100);
+  }, 100)
 
   $(document).trigger('redraw');
 
-});
-
+})
 
 // --------------------------------------------------------------------------
 //   Trigger an update on redraw
 // --------------------------------------------------------------------------
 
-$(document).on('redraw', triggerMatchHeight);
+$(document).on('redraw', triggerMatchHeight)
 
 function triggerMatchHeight() {
-  $.fn.matchHeight._update();
+  $.fn.matchHeight._update()
 }

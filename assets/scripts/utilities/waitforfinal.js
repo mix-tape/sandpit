@@ -11,7 +11,7 @@
 //   }, 500, "some unique string");
 // });
 
-var waitForFinalEvent = (function () {
+module.exports = (function () {
   var timers = {};
   return function (callback, ms, uniqueId) {
     if (!uniqueId) {
