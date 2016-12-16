@@ -1,5 +1,5 @@
 
-  <nav class="wrapper primary-navigation">
+  <nav class="wrapper primary-navigation-wrapper">
 
     <div class="container">
 
