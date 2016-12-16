@@ -95,6 +95,8 @@ gulp.task('lint-styles', () => {
       configFile: '.scss-lint-config.yml',
     }))
     .pipe( plugins.sassLint.format() )
+    .pipe( plugins.sassLint.failOnError())
+    .on("error", plugins.notify.onError('SASS Lint Error!'))
 })
 
 
@@ -115,14 +117,15 @@ gulp.task('styles', () => {
       quiet: true,
       includePaths: [ config.vendor ]
     })
-    .on( 'error', plugins.sass.logError) )
+    .on( 'error', plugins.sass.logError)
+    .on( 'error', plugins.notify.onError('SCSS Error!') ) )
     .pipe( plugins.sourcemaps.init({ loadMaps: true }) )
     .pipe( plugins.groupCssMediaQueries() )
     .pipe( plugins.autoprefixer("last 3 version", "> 1%", "ie 8", "ie 7") )
     .pipe( plugins.rename('styles.css') )
     .pipe( plugins.sourcemaps.write('./') )
     .pipe( gulp.dest( config.styles ) )
-    .pipe( browserSync.reload({stream:true}) )
+    .pipe( browserSync.stream( { match: '**/*.css' } ) )
 })
 
 
@@ -139,6 +142,18 @@ gulp.task('compress-styles', ['styles'], () => {
     .pipe( plugins.parker() )
 })
 
+// --------------------------------------------------------------------------
+//   Lint JS
+// --------------------------------------------------------------------------
+
+gulp.task('lint-scripts', function() {
+
+  return gulp.src([config.scripts + '/**/*.js', '!' + config.scripts + '/global.js'])
+    .pipe(plugins.eslint('.eslintrc.yml'))
+    .pipe(plugins.eslint.format())
+    .pipe(plugins.eslint.failAfterError())
+    .on("error", plugins.notify.onError('ESLint Error!'))
+})
 
 // --------------------------------------------------------------------------
 //   Concat all user script files required into `global.js`
