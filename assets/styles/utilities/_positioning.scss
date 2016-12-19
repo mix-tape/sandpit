@@ -4,21 +4,19 @@
 //
 // --------------------------------------------------------------------------
 
-// sass-lint:disable property-sort-order
-
-@mixin vertical-align($position: relative) {
+@mixin vertical-align($position: absolute) {
   position: $position;
   top: 50%;
   transform: translateY(-50%);
 }
 
-@mixin horizontal-align($position: relative) {
+@mixin horizontal-align($position: absolute) {
   position: $position;
   left: 50%;
   transform: translateX(-50%);
 }
 
-@mixin center($position: relative) {
+@mixin center-align($position: absolute) {
   position: $position;
   top: 50%;
   left: 50%;
