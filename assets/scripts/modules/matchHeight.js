@@ -5,7 +5,7 @@
 //
 // --------------------------------------------------------------------------
 
-$(window).load(function() {
+$(window).on('load', function() {
 
   // --------------------------------------------------------------------------
   //   Matchheight options
@@ -26,9 +26,9 @@ $(window).load(function() {
     // $('.example').matchHeight(options);
   }, 100);
 
-  $(document).trigger('redraw');
+  $(document).trigger('redraw')
 
-});
+})
 
 
 // --------------------------------------------------------------------------
@@ -38,5 +38,5 @@ $(window).load(function() {
 $(document).on('redraw', triggerMatchHeight);
 
 function triggerMatchHeight() {
-  $.fn.matchHeight._update();
+  $.fn.matchHeight._update()
 }
