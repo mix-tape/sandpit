@@ -6,20 +6,26 @@
 
 // $(window).resize(function () {
 //   waitForFinalEvent(function(){
-//     alert('Resize...');
+//     alert('Resize...')
 //     //...
-//   }, 500, "some unique string");
-// });
+//   }, 500, "some unique string")
+// })
 
 var waitForFinalEvent = (function () {
-  var timers = {};
+
+  var timers = {}
+
   return function (callback, ms, uniqueId) {
+
     if (!uniqueId) {
-      uniqueId = "Don't call this twice without a uniqueId";
+      uniqueId = "Don't call this twice without a uniqueId"
     }
+
     if (timers[uniqueId]) {
-      clearTimeout (timers[uniqueId]);
+      clearTimeout (timers[uniqueId])
     }
-    timers[uniqueId] = setTimeout(callback, ms);
-  };
-})();
+
+    timers[uniqueId] = setTimeout(callback, ms)
+
+  }
+})()

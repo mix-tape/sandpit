@@ -4,11 +4,11 @@
 //
 // --------------------------------------------------------------------------
 
-var easingFunction = 'easeInOutQuad';
+var easingFunction = 'easeInOutQuad'
 
-var mobile = true;
-var mobileBreakPoint = '800px';
+var mobile = true
+var mobileBreakPoint = '800px'
 
-var executeOnMobile = [];
-var executeOnDesktop = [];
-var executeOnResize = [];
+var executeOnMobile = []
+var executeOnDesktop = []
+var executeOnResize = []
