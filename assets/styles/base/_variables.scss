@@ -30,3 +30,8 @@ $base-link-hover:     lighten($base-link-color, 20%);
 
 $base-border-color:   $gray;
 $base-border-radius:  2px;
+
+
+// ----- Transitions ----- //
+
+$navigation-transition: all 500ms $ease-in-out-quad;

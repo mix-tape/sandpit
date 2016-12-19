@@ -44,3 +44,25 @@ $mobile-up:           new-breakpoint(min-width $mobile 12);
 @include media($tablet-up) { /* */ }
 @include media($desktop-up) { /* */ }
 @include media($large-desktop-up) { /* */ }
+
+
+// --------------------------------------------------------------------------
+//   Centering mixin for containers
+// --------------------------------------------------------------------------
+
+@mixin center {
+  @include outer-container;
+
+  @include media($desktop-down) {
+    width: $desktop;
+  }
+
+  @include media($tablet-down) {
+    width: $tablet;
+  }
+
+  @include media($mobile-down) {
+    max-width: $mobile;
+    width: auto;
+  }
+}
