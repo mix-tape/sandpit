@@ -21,10 +21,8 @@ var gulp = require('gulp'),
 // --------------------------------------------------------------------------
 
 var bowerrc = JSON.parse(fs.readFileSync('.bowerrc', 'utf8'))
-var secrets = JSON.parse(fs.readFileSync('../../../secrets.json', 'utf8'))
 
 var config = {
-  url: secrets.development.url,
   styles: './assets/styles',
   scripts: './assets/scripts',
   images: './assets/images',
@@ -38,6 +36,11 @@ var config = {
 // --------------------------------------------------------------------------
 
 gulp.task('browser-sync', () => {
+
+  // Load development URL from secrets
+
+  var secrets = JSON.parse(fs.readFileSync('../../../secrets.json', 'utf8'))
+  config.url = secrets.development.url
 
   // Watch these files and trigger reload
 
