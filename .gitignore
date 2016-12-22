@@ -23,9 +23,5 @@ assets/vendor
 .sass-cache
 *.map
 
-config.codekit
-.codekit-cache
-assets/scripts/app.js
-assets/scripts/vendor.js
 assets/scripts/global.js
-styles.css
+assets/styles/styles.css
